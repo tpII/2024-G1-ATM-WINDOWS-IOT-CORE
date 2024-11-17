@@ -1,0 +1,3 @@
+C:\Users\Ferna\OneDrive\Desktop\Windows-iotcore-samples\Samples\RFIDForIoT\CS\Mfrc522Lib\Mfrc522Lib.csproj;arm
+C:\Users\Ferna\OneDrive\Desktop\Windows-iotcore-samples\Samples\RFIDForIoT\CS\PiezoBuzzerLib\PiezoBuzzerLib.csproj;arm
+C:\Users\Ferna\OneDrive\Desktop\Windows-iotcore-samples\Samples\RFIDForIoT\CS\RFIDForIoT\RFIDForIoT.csproj;arm
