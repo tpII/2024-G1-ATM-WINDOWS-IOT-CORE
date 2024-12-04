@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ATM.Core.Services;
+using ATM.Core.Hubs;
 
 namespace ATM.UI
 {
@@ -24,6 +26,8 @@ namespace ATM.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSignalR();
+            services.AddHostedService<MqttClientService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +54,7 @@ namespace ATM.UI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapHub<MessageHub>("/messageHub");
             });
         }
     }
