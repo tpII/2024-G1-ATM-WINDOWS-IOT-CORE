@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM.Core", "ATM.Core\ATM.Core.csproj", "{6FFAE5E5-7A5C-4051-B864-829AAE493766}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATM.UI", "ATM.UI\ATM.UI.csproj", "{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{6FFAE5E5-7A5C-4051-B864-829AAE493766}.Release|x64.Build.0 = Release|Any CPU
 		{6FFAE5E5-7A5C-4051-B864-829AAE493766}.Release|x86.ActiveCfg = Release|Any CPU
 		{6FFAE5E5-7A5C-4051-B864-829AAE493766}.Release|x86.Build.0 = Release|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Debug|x64.Build.0 = Debug|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Debug|x86.Build.0 = Debug|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Release|x64.ActiveCfg = Release|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Release|x64.Build.0 = Release|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Release|x86.ActiveCfg = Release|Any CPU
+		{8A58C66C-ADF5-4F95-8D3D-7FF3E4904AE3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
