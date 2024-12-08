@@ -1,7 +1,12 @@
+using ATM.Infrastructure.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfaces
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHostedService<RfidBackgroundService>();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -13,7 +18,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -21,5 +25,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapControllers();
 
 app.Run();

@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ATM.Application\ATM.Application.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
   </ItemGroup>
 
   <PropertyGroup>
