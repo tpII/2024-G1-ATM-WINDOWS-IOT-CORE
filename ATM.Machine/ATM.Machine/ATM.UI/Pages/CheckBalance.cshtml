@@ -1,0 +1,23 @@
+@page
+@model ATM.UI.Pages.CheckBalanceModel
+@{
+    ViewData["Title"] = "Check Balance";
+}
+
+<h1>Check Account Balance</h1>
+
+<form method="post">
+    <label for="accountId">Account ID:</label>
+    <input type="text" id="accountId" name="AccountId" required />
+    <button type="submit">Check Balance</button>
+</form>
+
+@if (Model.Balance.HasValue)
+{
+    <p>Your account balance is: @Model.Balance.Value</p>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <p style="color: red;">@Model.ErrorMessage</p>
+}
