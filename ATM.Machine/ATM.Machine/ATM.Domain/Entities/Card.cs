@@ -13,4 +13,17 @@ public class Card
     public DateTime CreatedAt { get; set; } // Fecha de emisión
     public string SecurityCodeHash { get; set; } // Hash del CVV (opcional por seguridad)
     public string PINHash { get; set; } // Hash del PIN de la tarjeta
+
+    public Card(string id, string cardNumber, string cardHolderName, DateTime expirationDate, string accountId, bool isActive, DateTime createdAt, string securityCodeHash, string pinHash)
+    {
+        Id = id;
+        CardNumber = cardNumber;
+        CardHolderName = cardHolderName;
+        ExpirationDate = expirationDate;
+        AccountId = accountId;
+        IsActive = isActive;
+        CreatedAt = createdAt;
+        SecurityCodeHash = securityCodeHash;
+        PINHash = pinHash;
+    }
 }

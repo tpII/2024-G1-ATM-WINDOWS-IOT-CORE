@@ -14,4 +14,14 @@ public class Transaction
     public DateTime CreatedAt { get; set; } // Fecha y hora de la transacción
     public string? PerformedBy { get; set; } // ID del usuario que realizó la operación (opcional)
     public string? Description { get; set; } // Detalles adicionales de la transacción
+
+    public Transaction(string id, string accountId, decimal amount, TransactionType type, TransactionStatus status, DateTime createdAt)
+    {
+        Id = id;
+        AccountId = accountId;
+        Amount = amount;
+        Type = type;
+        Status = status;
+        CreatedAt = createdAt;
+    }
 }
