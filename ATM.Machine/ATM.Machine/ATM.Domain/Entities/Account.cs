@@ -11,5 +11,15 @@ public class Account
     public string ClientId { get; set; } // Relación con el cliente
     public DateTime CreatedAt { get; set; } // Fecha de creación
     public DateTime? UpdatedAt { get; set; } // Fecha de última actualización (opcional)
+
+    public Account(string id, string cbu, string accountNumber, decimal balance, string clientId, DateTime createdAt)
+    {
+        Id = id;
+        CBU = cbu;
+        AccountNumber = accountNumber;
+        Balance = balance;
+        ClientId = clientId;
+        CreatedAt = createdAt;
+    }
 }
 
