@@ -1,3 +1,4 @@
+using ATM.Application.Interfaces;
 using ATM.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,8 @@ builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfa
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IRfidReader, Windows10RfidReader>();
 builder.Services.AddHostedService<RfidBackgroundService>();
 builder.Services.AddControllers();
 

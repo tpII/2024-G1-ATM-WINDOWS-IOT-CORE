@@ -1,8 +1,9 @@
 using System;
+using System.Threading;
 
 namespace ATM.Application.Interfaces;
 
-public interface IRfidReader
+public interface IRfidReader : IDisposable
 {
-    Task<string> ReadCardIdAsync();
+    Task<byte[]> ReadCardIdAsync(CancellationToken cancellationToken);
 }
