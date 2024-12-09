@@ -8,7 +8,7 @@ public interface ICardService
     Task<bool> AuthenticateCardAsync(string cardId);
     
     // Lee el ID de la tarjeta RFID
-    Task<byte[]> ReadCardIdAsync();
+    // Task<byte[]> ReadCardIdAsync();
     
     // Verifica el PIN de una tarjeta
     Task<bool> VerifyPinAsync(string cardId, string pin);

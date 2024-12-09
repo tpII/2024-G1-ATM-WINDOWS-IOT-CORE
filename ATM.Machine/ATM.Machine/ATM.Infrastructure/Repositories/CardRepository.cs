@@ -26,7 +26,7 @@ public class CardRepository : ICardRepository
 
     public async Task<bool> VerifyPinAsync(string cardId, string pin)
     {
-        var jsonPayload = JsonSerializer.Serialize(new { CardId = cardId, Pin = pin });
+        var jsonPayload = JsonSerializer.Serialize(new { cardId = cardId, pin = pin });
         var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
         var response = await _httpClient.PostAsync("api/cards/verify-pin", content);

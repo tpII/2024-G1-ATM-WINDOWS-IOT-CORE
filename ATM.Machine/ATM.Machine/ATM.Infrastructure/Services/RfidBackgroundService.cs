@@ -6,18 +6,23 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using ATM.Application.Interfaces;
+using Microsoft.AspNetCore.SignalR;
+using ATM.Infrastructure.Hubs;
+using ATM.Application.UseCases;
 
 namespace ATM.Infrastructure.Services;
 
 public class RfidBackgroundService : BackgroundService
 {
-    private readonly HttpClient _httpClient;
-    private IRfidReader _rfidReader;
+    private readonly IHubContext<CardNotificationHub> _hubContext;
+    private readonly IRfidReader _rfidReader;
+    private readonly EnterCardUseCase _useCase;
 
-    public RfidBackgroundService(HttpClient httpClient, IRfidReader rfidReader)
+    public RfidBackgroundService(IHubContext<CardNotificationHub> hubContext, IRfidReader rfidReader, EnterCardUseCase useCase)
     {
-        _httpClient = httpClient;
+        _hubContext = hubContext;
         _rfidReader = rfidReader;
+        _useCase = useCase;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -36,18 +41,8 @@ public class RfidBackgroundService : BackgroundService
 
                     if (!string.IsNullOrEmpty(cardId))
                     {
-                        // Crea el payload de la solicitud
-                        var payload = new { CardId = cardId };
-                        var jsonPayload = JsonSerializer.Serialize(payload);
-                        var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                        // Enviar notificación al servidor
-                        var response = await _httpClient.PostAsync("http://localhost:5000/api/cards/detected", content, stoppingToken);
-                        
-                        if (!response.IsSuccessStatusCode)
-                        {
-                            Console.WriteLine($"Error notificando al servidor: {response.StatusCode}");
-                        }
+                        bool isValid = await _useCase.ExecuteAsync(cardId);
+                        await _hubContext.Clients.All.SendAsync("CardDetected", isValid, stoppingToken);
                     }
                 }
                 catch (OperationCanceledException)
@@ -74,7 +69,6 @@ public class RfidBackgroundService : BackgroundService
 
     public override void Dispose()
     {
-        _httpClient.Dispose();
         _rfidReader?.Dispose();
         base.Dispose();
     }
