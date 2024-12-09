@@ -16,7 +16,15 @@ builder.Services.AddScoped<CheckBalance>();
 // Registrar el servicio CheckBalanceService
 builder.Services.AddScoped<CheckBalanceService>();
 
+
+
 // Configurar el repositorio con `HttpClient`
+builder.Services.AddHttpClient<IAccountRepository, AccountRepository>(client =>
+{
+    client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor en la PC
+});
+
+// Configurar el repositorio de cuentas con HttpClient
 builder.Services.AddHttpClient<IAccountRepository, AccountRepository>(client =>
 {
     client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor en la PC
