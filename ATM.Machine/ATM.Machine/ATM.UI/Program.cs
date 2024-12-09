@@ -1,6 +1,7 @@
 using ATM.Application.Interfaces;
 using ATM.Application.Interfaces.Repositories;
 using ATM.Application.Interfaces.Services;
+using ATM.Application.Interfaces.Security;
 using ATM.Application.Services;
 using ATM.Application.UseCases;
 using ATM.Infrastructure.Services;
@@ -23,10 +24,12 @@ builder.Services.AddHttpClient<ICardRepository, CardRepository>(client =>
 });
 
 // Configurar servicios
-builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddTransient<IEncryptionService, EncryptionService>();
+builder.Services.AddSingleton<SessionService>();
 
 // Registrar casos de uso
 builder.Services.AddTransient<EnterCardUseCase>();
+builder.Services.AddTransient<EnterPinUseCase>();
 
 builder.Services.AddControllers();
 

@@ -1,20 +1,20 @@
 using System;
-using ATM.Application.Interfaces.Services;
+using ATM.Application.Services;
 
 namespace ATM.Application.UseCases;
 
 public class EnterCardUseCase
 {
-    private readonly ICardService _cardService;
+    private readonly SessionService _sessionService;
 
-    public EnterCardUseCase(ICardService cardService)
+    public EnterCardUseCase(SessionService sessionService)
     {
-        _cardService = cardService;
+        _sessionService = sessionService;
     }
 
     public async Task<bool> ExecuteAsync(string id)
     {
-        var cardExists = await _cardService.AuthenticateCardAsync(id);
+        var cardExists = await _sessionService.VerifyCardAsync(id);
         return cardExists;
     }
 }
