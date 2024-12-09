@@ -1,12 +1,20 @@
 using ATM.Infrastructure.Repositories;
 using ATM.Application.Interfaces.Repositories;
 using ATM.Application.UseCases;
+using ATM.Application.Services;
+using System.Text.Json;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfaces
+
 
 // Registrar el caso de uso
-builder.Services.AddTransient<CheckBalance>();
+builder.Services.AddScoped<CheckBalance>();
+
+// Registrar el servicio CheckBalanceService
+builder.Services.AddScoped<CheckBalanceService>();
 
 // Configurar el repositorio con `HttpClient`
 builder.Services.AddHttpClient<IAccountRepository, AccountRepository>(client =>
@@ -17,6 +25,13 @@ builder.Services.AddHttpClient<IAccountRepository, AccountRepository>(client =>
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//Add controllers
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    });
 
 var app = builder.Build();
 

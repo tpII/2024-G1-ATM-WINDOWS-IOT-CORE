@@ -1,23 +1,20 @@
-using System;
+using ATM.Application.Services;
 using ATM.Application.Interfaces.Repositories;
 
-namespace ATM.Application.UseCases;
-
-public class CheckBalance
+namespace ATM.Application.UseCases
 {
-    private readonly IAccountRepository _accountRepository;
-
-    public CheckBalance(IAccountRepository accountRepository)
+    public class CheckBalance
     {
-        _accountRepository = accountRepository;
+        private readonly CheckBalanceService _checkBalanceService;
+
+        public CheckBalance(CheckBalanceService checkBalanceService)
+        {
+            _checkBalanceService = checkBalanceService;
+        }
+
+        public async Task<decimal> ExecuteAsync(string accountId)
+        {
+            return await _checkBalanceService.CheckBalanceAsync(accountId); // Llama al servicio
+        }
     }
-
-    public async Task<decimal> ExecuteAsync(string accountId)
-    {
-        if (!await _accountRepository.ExistsAsync(accountId))
-            throw new Exception("Account does not exist.");
-
-        return await _accountRepository.GetBalanceAsync(accountId);
-    }
-
 }

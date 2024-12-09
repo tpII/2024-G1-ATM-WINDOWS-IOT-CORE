@@ -6,36 +6,36 @@ namespace ATM.UI.Pages;
 
 public class CheckBalanceModel : PageModel
 {
-    private readonly CheckBalance _checkBalanceUseCase;
+    private readonly CheckBalance _checkBalance;
 
-    public CheckBalanceModel(CheckBalance checkBalanceUseCase)
+    public CheckBalanceModel(CheckBalance checkBalance)
     {
-        _checkBalanceUseCase = checkBalanceUseCase;
+        _checkBalance = checkBalance;
     }
 
     [BindProperty]
-    public string? AccountId { get; set; }
+    public string AccountId { get; set; }
+    public decimal? Balance { get; set; }
+    public string? ErrorMessage { get; set; }
 
-    public decimal? Balance { get; private set; }
-    public string? ErrorMessage { get; private set; }
-
+    // Este método se ejecuta cuando se envía el formulario
     public async Task<IActionResult> OnPostAsync()
     {
-        if (string.IsNullOrWhiteSpace(AccountId))
+        if (string.IsNullOrEmpty(AccountId))
         {
-            ErrorMessage = "Account ID is required.";
-            return Page();
+            ErrorMessage = "Account ID cannot be empty.";
+            return Page(); // Devuelve la misma página para mostrar el error
         }
 
         try
         {
-            Balance = await _checkBalanceUseCase.ExecuteAsync(AccountId);
+            Balance = await _checkBalance.ExecuteAsync(AccountId); // Llama al caso de uso para obtener el balance
         }
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
         }
 
-        return Page();
+        return Page(); // Devuelve la misma página para mostrar el resultado
     }
 }
