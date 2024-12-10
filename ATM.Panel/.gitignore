@@ -1,0 +1,64 @@
+# General Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# Build outputs (frontend y backend)
+build/
+dist/
+
+# Temporary files
+tmp/
+temp/
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# OS generated files
+Thumbs.db
+*.~lock.*
+desktop.ini
+
+# Coverage directory used by testing tools
+coverage/
+
+# MongoDB data
+*.lock
+*.pid
+/data/db/
+
+# React-specific
+client/node_modules/
+client/build/
+
+# React testing outputs
+client/.jest/
+client/.eslintcache/
+
+# Dependency directory
+server/node_modules/
+
+# Backend testing outputs
+server/.jest/
+server/.eslintcache/
+server/coverage/
+
+# ESLint y Prettier config local
+*.eslintcache
+.prettier-cache/
+
+# Miscellaneous
+*.log
+*.cache
