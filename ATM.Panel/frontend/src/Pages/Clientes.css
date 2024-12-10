@@ -1,0 +1,43 @@
+.clientes-container {
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .agregar-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .eliminar-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .clientes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .clientes-table th, .clientes-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .clientes-table th {
+    background-color: #f4f4f4;
+  }
+  
