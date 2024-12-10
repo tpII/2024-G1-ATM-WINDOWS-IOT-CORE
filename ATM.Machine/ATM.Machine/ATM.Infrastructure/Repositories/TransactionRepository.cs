@@ -45,7 +45,7 @@ namespace ATM.Infrastructure.Repositories
             var content = new StringContent(JsonSerializer.Serialize(transaction), Encoding.UTF8, "application/json");
 
             // Enviar la solicitud POST al servidor Node.js
-            var response = await _httpClient.PostAsync("api/transactions/add", content);
+            var response = await _httpClient.PostAsync("api/transactions", content);
 
             // Verificar si la respuesta es exitosa
             if (!response.IsSuccessStatusCode)

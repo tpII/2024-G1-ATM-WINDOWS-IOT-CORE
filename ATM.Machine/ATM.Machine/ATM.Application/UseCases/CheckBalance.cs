@@ -1,20 +1,19 @@
-using ATM.Application.Services;
-using ATM.Application.Interfaces.Repositories;
+using ATM.Application.Interfaces.Services;
 
 namespace ATM.Application.UseCases
 {
     public class CheckBalance
     {
-        private readonly CheckBalanceService _checkBalanceService;
+        private readonly IAccountService _accountService;
 
-        public CheckBalance(CheckBalanceService checkBalanceService)
+        public CheckBalance(IAccountService accountService)
         {
-            _checkBalanceService = checkBalanceService;
+            _accountService = accountService;
         }
 
         public async Task<decimal> ExecuteAsync(string accountId)
         {
-            return await _checkBalanceService.CheckBalanceAsync(accountId); // Llama al servicio
+            return await _accountService.GetBalanceAsync(accountId);
         }
     }
 }
