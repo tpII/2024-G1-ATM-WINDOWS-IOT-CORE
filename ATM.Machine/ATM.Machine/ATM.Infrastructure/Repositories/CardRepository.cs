@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ATM.Application.Interfaces.Repositories;
 using ATM.Domain.Entities;
+using ATM.Infrastructure.Utils;
 
 namespace ATM.Infrastructure.Repositories;
 
@@ -17,23 +18,33 @@ public class CardRepository : ICardRepository
         _httpClient = httpClient;
     }
 
-    public async Task<bool> ExistsAsync(string id)
+    public async Task<string?> ExistsAsync(string number)
     {
-        var response = await _httpClient.GetAsync($"api/cards/exists/{id}");
-
-        return response.IsSuccessStatusCode;
+        var response = await _httpClient.GetAsync($"api/cards/exists/{number}");
+        var content = await response.Content.ReadAsStringAsync();
+        var payload = content.Deserialize<ExistsResponse>();
+        return payload.CardId;
     }
 
-    public async Task<bool> VerifyPinAsync(string cardId, string pin)
+    public async Task<string?> VerifyPinAsync(string cardId, string pin)
     {
-        var jsonPayload = JsonSerializer.Serialize(new { cardId = cardId, pin = pin });
+        var jsonPayload = CustomJsonSerializer.Serialize(new { CardId = cardId, Pin = pin });
         var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
         var response = await _httpClient.PostAsync("api/cards/verify-pin", content);
 
-        // Si la respuesta es exitosa, devolvemos true. Si no, false.
-        return response.IsSuccessStatusCode;
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var payload = responseContent.Deserialize<VerifyResponse>();
+        return payload.AccountId;
     }
-
 }
-    
+
+public class ExistsResponse
+{
+    public string? CardId { get; set; }
+}
+
+public class VerifyResponse
+{
+    public string? AccountId { get; set; }
+}

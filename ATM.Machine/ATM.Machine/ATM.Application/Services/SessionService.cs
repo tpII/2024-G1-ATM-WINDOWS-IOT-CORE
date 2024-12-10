@@ -8,6 +8,7 @@ namespace ATM.Application.Services;
 public class SessionService : ISessionService
 {
     public string? CardId { get; set; }
+    public string? AccountId { get; set; }
 
     private readonly ICardRepository _cardRepository;
 
@@ -19,19 +20,41 @@ public class SessionService : ISessionService
         _encryptionService = encryptionService;
     }
 
-    public async Task<bool> VerifyCardAsync(string id)
+    public async Task<bool> VerifyCardAsync(string number)
     {
-        CardId = id;
-        return await _cardRepository.ExistsAsync(id);
+        CardId = await _cardRepository.ExistsAsync(number);
+        return CardId != null;
     }
 
-    public async Task<bool> VerifyPinAsync(int pin)
+    public async Task<bool> VerifyPinAsync(string pin)
+    {
+        string id = GetCardId();
+        string pinHash = _encryptionService.Hash(pin);
+        AccountId = await _cardRepository.VerifyPinAsync(id, pinHash);
+        return AccountId != null;
+    }
+
+    public string GetCardId()
     {
         if(CardId == null)
         {
-            throw new Exception("Servicio de sesión: Antes de verificar el pin se debe autenticar una tarjeta para la sesion");
+            throw new Exception("Servicio de sesión: no existe una sesion actualmente");
         }
-        string pinHash = _encryptionService.Hash($"{pin}");
-        return await _cardRepository.VerifyPinAsync(CardId, pinHash);
+        return CardId;
+    }
+
+    public string GetAccountId()
+    {
+        if(AccountId == null)
+        {
+            throw new Exception("Servicio de sesión: no existe una sesion actualmente");
+        }
+        return AccountId;
+    }
+
+    public void LogOut()
+    {
+        CardId = null;
+        AccountId = null;
     }
 }

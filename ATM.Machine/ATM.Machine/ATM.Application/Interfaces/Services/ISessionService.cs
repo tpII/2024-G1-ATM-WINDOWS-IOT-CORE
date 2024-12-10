@@ -8,5 +8,5 @@ public interface ISessionService
     Task<bool> VerifyCardAsync(string cardId);
     
     // Verifica el PIN de una tarjeta
-    Task<bool> VerifyPinAsync(int pin);
+    Task<bool> VerifyPinAsync(string pin);
 }
