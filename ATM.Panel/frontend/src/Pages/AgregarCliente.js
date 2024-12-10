@@ -6,7 +6,7 @@ function AgregarCliente() {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const navigate = useNavigate(); // Cambio aquí
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();

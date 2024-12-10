@@ -1,0 +1,32 @@
+/* Cuentas.css */
+.cuentas-container {
+    padding: 20px;
+  }
+  
+  .cuentas-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .cuentas-table th, .cuentas-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .btn {
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  
+  .agregar-btn {
+    background-color: green;
+    color: white;
+  }
+  
+  .eliminar-btn {
+    background-color: red;
+    color: white;
+  }
+  

@@ -5,7 +5,10 @@ import Cuentas from './Pages/Cuentas';
 import Clientes from './Pages/Clientes';
 import Tarjetas from './Pages/Tarjetas';
 import Transacciones from './Pages/Transacciones';
-import AgregarCliente from './Pages/AgregarCliente'; // o la ubicación correcta
+import AgregarCuenta from './Pages/AgregarCuenta';
+import AgregarCliente from './Pages/AgregarCliente'; 
+import AgregarTarjeta from './Pages/AgregarTarjeta';
+
 import './App.css';
 
 function App() {
@@ -18,6 +21,8 @@ function App() {
         <Route path="/tarjetas" element={<Tarjetas />} />
         <Route path="/transacciones" element={<Transacciones />} />
         <Route path="/clientes/agregar" element={<AgregarCliente />} />
+        <Route path="/cuentas/agregar" element={<AgregarCuenta />} />
+        <Route path="/tarjetas/agregar" element={<AgregarTarjeta />} />
       </Routes>
     </Router>
   );
