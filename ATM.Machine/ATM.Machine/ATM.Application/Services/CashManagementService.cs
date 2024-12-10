@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ATM.Application.Interfaces.Repositories;
 using ATM.Application.Interfaces.Services;
 
@@ -5,21 +6,21 @@ namespace ATM.Application.Services
 {
     public class CashManagementService : ICashManagementService
     {
-        private readonly ICashManagementRepository _cashManagementRepository;
+        private readonly ICashManagementRepository _repository;
 
-        public CashManagementService(ICashManagementRepository cashManagementRepository)
+        public CashManagementService(ICashManagementRepository repository)
         {
-            _cashManagementRepository = cashManagementRepository;
+            _repository = repository;
         }
 
-        public int GetAvailableCash()
+        public async Task<int> GetAvailableCashAsync()
         {
-            return _cashManagementRepository.GetAvailableCash();
+            return await _repository.GetAvailableCashAsync();
         }
 
-        public void LoadCash(int amount)
+        public async Task LoadCashAsync(int amount)
         {
-            _cashManagementRepository.LoadCash(amount);
+            await _repository.LoadCashAsync(amount);
         }
     }
 }

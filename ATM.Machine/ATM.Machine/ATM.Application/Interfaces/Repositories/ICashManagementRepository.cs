@@ -1,9 +1,10 @@
-using System;
+using System.Threading.Tasks;
 
-namespace ATM.Application.Interfaces.Repositories;
-
-public interface ICashManagementRepository
+namespace ATM.Application.Interfaces.Repositories
 {
-    int GetAvailableCash();
-    void LoadCash(int amount);
+    public interface ICashManagementRepository
+    {
+        Task<int> GetAvailableCashAsync(); // Ahora devuelve un Task
+        Task LoadCashAsync(int amount);    // Método asincrónico
+    }
 }

@@ -18,7 +18,9 @@ builder.Services.AddScoped<ICashManagementService, CashManagementService>();
 
 // Registrar casos de uso
 builder.Services.AddScoped<CheckBalance>();
-
+builder.Services.AddScoped<Deposit>();
+builder.Services.AddScoped<Transfer>();
+builder.Services.AddScoped<Withdrawal>();
 
 
 // Configurar el repositorio de cuentas con HttpClient

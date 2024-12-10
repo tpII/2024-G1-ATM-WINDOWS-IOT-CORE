@@ -1,35 +1,32 @@
-using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 using ATM.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ATM.UI.Controllers
+namespace ATM.UI.ApiControllers
 {
     [ApiController]
     [Route("api/cash-management")]
     public class CashManagementController : ControllerBase
     {
-        private readonly ICashManagementService _cashManagementService;
+        private readonly ICashManagementService _service;
 
-        public CashManagementController(ICashManagementService cashManagementService)
+        public CashManagementController(ICashManagementService service)
         {
-            _cashManagementService = cashManagementService;
+            _service = service;
         }
 
-        // Endpoint para obtener el efectivo disponible
         [HttpGet("available-cash")]
-        public IActionResult GetAvailableCash()
+        public async Task<IActionResult> GetAvailableCash()
         {
-            var availableCash = _cashManagementService.GetAvailableCash();
-            return Ok(new { availableCash });
+            var cash = await _service.GetAvailableCashAsync();
+            return Ok(cash);
         }
 
-        // Endpoint para cargar efectivo
         [HttpPost("load-cash")]
-        public IActionResult LoadCash([FromBody] int amount)
+        public async Task<IActionResult> LoadCash([FromBody] int amount)
         {
-            _cashManagementService.LoadCash(amount);
-            return Ok(new { message = "Cash loaded successfully", loadedAmount = amount });
+            await _service.LoadCashAsync(amount);
+            return Ok(new { Message = "Cash loaded successfully" });
         }
     }
 }
-

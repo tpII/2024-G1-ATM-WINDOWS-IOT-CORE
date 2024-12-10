@@ -1,8 +1,8 @@
-using ATM.Application.Interfaces.Repositories;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ATM.Application.Interfaces.Repositories;
 
 namespace ATM.Infrastructure.Repositories
 {
@@ -15,19 +15,22 @@ namespace ATM.Infrastructure.Repositories
             _httpClient = httpClient;
         }
 
-        public int GetAvailableCash()
+        public async Task<int> GetAvailableCashAsync()
         {
-            var response = _httpClient.GetAsync("api/cash-management/available-cash").Result;
+            var response = await _httpClient.GetAsync("/api/atm/available-cash");
             response.EnsureSuccessStatusCode();
 
-            var responseContent = response.Content.ReadAsStringAsync().Result;
-            return JsonSerializer.Deserialize<int>(responseContent);
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<int>(json);
+
+            return result;
         }
 
-        public void LoadCash(int amount)
+        public async Task LoadCashAsync(int amount)
         {
-            var content = new StringContent(JsonSerializer.Serialize(amount), Encoding.UTF8, "application/json");
-            var response = _httpClient.PostAsync("api/cash-management/load-cash", content).Result;
+            var content = new StringContent(JsonSerializer.Serialize(new { amount }), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("/api/atm/load-cash", content);
             response.EnsureSuccessStatusCode();
         }
     }
