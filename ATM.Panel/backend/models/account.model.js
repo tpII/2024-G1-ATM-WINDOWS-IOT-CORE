@@ -10,6 +10,7 @@ const accountSchema = new Schema({
     },
     cbu: {
         type: String,
+        unique: true,
         required: true
     },
     clientId: { 
@@ -19,7 +20,8 @@ const accountSchema = new Schema({
     },
     balance: { 
         type: Number, 
-        required: true 
+        required: true,
+        default: 0
     }
     // currency: { 
     //     type: String, 

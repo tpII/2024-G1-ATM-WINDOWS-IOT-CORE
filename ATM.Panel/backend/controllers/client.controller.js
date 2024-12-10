@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 
 export const getCount = async(req, res) => {
     const c = await Client.countDocuments({});
-    console.log(`Contando clintes: ${c}`);
     res.json({count: c})
 };
 
@@ -30,9 +29,8 @@ export const createClient = async (req,res) => {
         return res.status(400).json({ success: false, message: "Por favor provea todos los campos" })
     }
 
-    const newClient = new Client(client);
-
     try {
+        const newClient = new Client(client);
         await newClient.save();
         res.status(201).json({ success: true, data: newClient });
     } catch (error) {
@@ -49,10 +47,14 @@ export const deleteClient = async (req,res) => {
         return res.status(404).json({ success: false, message: "ID inválido" });
     }
 
-    const client = Client.findById(id);
-    if(!client) return res.status(400).json({ success: false, message: "ID no encontrado" });
-
     try {
+        const client = await Client.findById(id);
+        if(!client) {
+            return res
+            .status(400)
+            .json({ success: false, message: `ID no encontrado` });
+        }
+        
         await Client.findByIdAndDelete(id);
         res.status(200).json({ success: true, message: "Cliente borrado" });
     } catch (error) {
