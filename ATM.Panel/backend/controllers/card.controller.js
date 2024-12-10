@@ -120,7 +120,7 @@ export const exists = async (req,res) => {
             });
         }
 
-        res.status(200).json({ success: true, message: "Tarjeta registrada" });
+        res.status(200).json({ cardId : card.id });
     } catch (error) {
         console.log("Error al buscar una tarjeta: ", error.message);
         res.status(500).json({ 
@@ -132,18 +132,17 @@ export const exists = async (req,res) => {
 };
 
 export const verifyPin = async (req,res) => {
-    const { nro, pin } = req.body;
+    const { cardId, pin } = req.body;
 
     try {
-        const card = await Card.findOne({ number : nro });
+        const card = await Card.findById(cardId);
         if (!card || card.pin != pin) {
             return res.status(404).json({ 
-                success: false, 
-                message: "La tarjeta o el pin son inválidos" 
+                accountId : null
             });
         }
 
-        res.status(200).json({ success: true, message: "Pin verificado" });
+        res.status(200).json({ accountId: card.accountId });
     } catch (error) {
         console.log("Error al verificar un pin: ", error.message);
         res.status(500).json({ 
@@ -155,11 +154,11 @@ export const verifyPin = async (req,res) => {
 };
 
 export const deactivateCard = async (req, res) => {
-    const { nro } = req.params;
+    const { cardId } = req.params;
   
     try {
-      const updatedCard = await Card.findOneAndUpdate(
-        { number : nro },         // Buscar tarjeta por el número de tarjeta
+      const updatedCard = await Card.findByIdAndUpdate(
+        { id : cardId },         // Buscar tarjeta por el número de tarjeta
         { isActive: false },    // Actualizar el campo isActive a false
         { new: true }           // Devuelve el documento actualizado
       );
@@ -183,11 +182,11 @@ export const deactivateCard = async (req, res) => {
   
 
 export const activateCard = async (req, res) => {
-    const { nro } = req.params;
+    const { cardId } = req.params;
   
     try {
-      const updatedCard = await Card.findOneAndUpdate(
-        { number : nro },         // Buscar tarjeta por el número de tarjeta
+      const updatedCard = await Card.findByIdAndUpdate(
+        { id : cardId },         // Buscar tarjeta por el número de tarjeta
         { isActive: true },    // Actualizar el campo isActive a false
         { new: true }           // Devuelve el documento actualizado
       );

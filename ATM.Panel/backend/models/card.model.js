@@ -5,8 +5,7 @@ const { Schema, model } = mongoose;
 const cardSchema = new Schema({
     number: { 
         type: String, 
-        required: true, 
-        unique: true 
+        required: true
     },
     pin: { 
         type: String, 

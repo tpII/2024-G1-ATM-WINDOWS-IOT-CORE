@@ -1,12 +1,10 @@
 import Transaction from "../models/transaction.model.js";
 import Account from "../models/account.model.js";
-import Card from "../models/card.model.js";
 import mongoose from "mongoose";
 
 
 export const getCount = async(req, res) => {
     const c = await Transaction.countDocuments({});
-    console.log(`Contando transacciones: ${c}`);
     res.json({count: c})
 };
 
@@ -33,7 +31,9 @@ export const getTransactions = async (req, res) => {
 export const createTransaction = async (req, res) => {
     const transaction = req.body;
 
-    const validtypes = ["deposit", "withdraw", "transfer"];
+    console.log(req.body);
+
+    const validtypes = ["Deposit", "Withdraw", "Transfer"];
     if (!validtypes.includes(transaction.type)) {
         return res.status(400).json({
             success: false,
@@ -48,35 +48,13 @@ export const createTransaction = async (req, res) => {
         });
     }
 
-    if (!mongoose.Types.ObjectId.isValid(transaction.cardId)) {
-        return res.status(404).json({ 
-            success: false, 
-            message: "ID de la tarjeta inválido" 
-        });
-    }
-
-    if(transaction.type == "transfer")
+    if(transaction.type == "Transfer")
     {
-        if(!transaction.destinationAccountId)
+        if(!transaction.destinationCbu)
         {
             return res.status(404).json({ 
                 success: false, 
                 message: "Falta el ID de la cuenta destino"
-            });
-        }
-
-        if (!mongoose.Types.ObjectId.isValid(transaction.destinationAccountId)) {
-            return res.status(404).json({ 
-                success: false, 
-                message: "ID de la cuenta destino inválido"
-            });
-        }
-
-        if(transaction.destinationAccountId == transaction.accountId)
-        {
-            return res.status(404).json({ 
-                success: false, 
-                message: "Los ID de las cuentas fuente y destino deben ser diferentes"
             });
         }
     }
@@ -97,15 +75,7 @@ export const createTransaction = async (req, res) => {
             });
         }
 
-        const sourceCard = await Card.findById(transaction.cardId);
-        if (!sourceCard) {
-            return res.status(404).json({
-                success: false,
-                message: "Tarjeta utilizada no encontrada"
-            });
-        }
-
-        if (transaction.type === "withdraw" || transaction.type === "transfer") {
+        if (transaction.type === "Withdraw" | transaction.type === "Transfer") {
             if (sourceAccount.balance < transaction.amount) {
                 return res.status(400).json({
                     success: false,
@@ -115,8 +85,8 @@ export const createTransaction = async (req, res) => {
         }
 
         let destinationAccount;
-        if (transaction.type === "transfer") {
-            destinationAccount = await Account.findById(transaction.destinationAccountId);
+        if (transaction.type === "Transfer") {
+            destinationAccount = await Account.findOne({ cbu : transaction.destinationCbu });
             if (!destinationAccount) {
                 return res.status(404).json({
                     success: false,
@@ -128,11 +98,11 @@ export const createTransaction = async (req, res) => {
         // Crear la transacción
         const newTransaction = new Transaction(transaction);
 
-        if (transaction.type === "deposit") {
+        if (transaction.type === "Deposit") {
             sourceAccount.balance += transaction.amount;
-        } else if (transaction.type === "withdraw") {
+        } else if (transaction.type === "Withdraw") {
             sourceAccount.balance -= transaction.amount;
-        } else if (transaction.type === "transfer") {
+        } else if (transaction.type === "Transfer") {
             sourceAccount.balance -= transaction.amount;
             destinationAccount.balance += transaction.amount;
         }

@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 const transactionSchema = new Schema({
     type: { 
         type: String, 
-        enum: ['deposit', 'withdraw', 'transfer'], 
+        enum: ['Deposit', 'Withdraw', 'Transfer'], 
         required: true 
     },
     status: { 
@@ -23,12 +23,8 @@ const transactionSchema = new Schema({
         ref: 'Account', 
         required: true 
     },
-    cardId: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'Card',
-    },
-    destinationAccountId: { 
-        type: Schema.Types.ObjectId, 
+    destinationCbu: { 
+        type: String, 
         ref: 'Account',
     },
     createdAt: { 

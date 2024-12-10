@@ -106,3 +106,34 @@ export const deleteAccount = async (req,res) => {
         })
     }
 };
+
+export const getBalance = async (req,res) => {
+    const {id} = req.params;
+    
+    if(!mongoose.Types.ObjectId.isValid(id))
+    {
+        return res.status(404).json({ 
+            success: false, 
+            message: "ID inválido" 
+        });
+    }
+
+    try {
+        const account = await Account.findById(id);
+        if (!account) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Cuenta no encontrada" 
+            });
+        }
+
+        res.status(200).json({ balance: account.balance });
+    } catch (error) {
+        console.log("Error al obtener el balance de una cuenta: ", error.message);
+        res.status(500).json({ 
+            success: false, 
+            message: "Error del servidor",
+            error: error.message
+        })
+    }
+};
