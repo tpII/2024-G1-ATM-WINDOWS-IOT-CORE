@@ -44,21 +44,27 @@ export const deleteClient = async (req,res) => {
     
     if(!mongoose.Types.ObjectId.isValid(id))
     {
-        return res.status(404).json({ success: false, message: "ID inválido" });
+        return res.status(404).json({ 
+            success: false, 
+            message: "ID inválido" 
+        });
     }
 
     try {
-        const client = await Client.findById(id);
+        const client = await Client.findByIdAndDelete(id);
         if(!client) {
-            return res
-            .status(400)
-            .json({ success: false, message: `ID no encontrado` });
+            return res.status(400).json({ 
+                success: false, 
+                message: "Cliente no encontrado" 
+            });
         }
-        
-        await Client.findByIdAndDelete(id);
+
         res.status(200).json({ success: true, message: "Cliente borrado" });
     } catch (error) {
         console.log("Error al borrar un cliente: ", error.message);
-        res.status(500).json({ success: false, message: "Error del servidor" })
+        res.status(500).json({ 
+            success: false, 
+            message: "Error del servidor" 
+        })
     }
 };
