@@ -6,5 +6,4 @@ public interface ICashManagementService
 {
     int GetAvailableCash();
     void LoadCash(int amount);
-    int DispenseCash(int amount);
 }

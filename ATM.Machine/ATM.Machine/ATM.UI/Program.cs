@@ -13,6 +13,7 @@ builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfa
 // Registrar servicios
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IATMConfigurationService, ATMConfigurationService>();
+builder.Services.AddScoped<ICashManagementService, CashManagementService>();
 
 
 // Registrar casos de uso
@@ -32,12 +33,17 @@ builder.Services.AddHttpClient<ITransactionRepository, TransactionRepository>(cl
     client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor en la PC
 });
 
-// Configurar el repositorio de Configuration de ATM
+// Configurar el repositorio de configuración de límites del cajero ATM
 builder.Services.AddHttpClient<IATMConfigurationRepository, ATMConfigurationRepository>(client =>
 {
     client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor Node.js
 });
 
+//Configurar el repositorio de control de dinero en el cajero ATM 
+builder.Services.AddHttpClient<ICashManagementRepository, CashManagementRepository>(client =>
+{
+    client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor Node.js
+});
 
 // Add services to the container.
 builder.Services.AddRazorPages();
