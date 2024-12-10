@@ -3,15 +3,16 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const transactionSchema = new Schema({
-    transactionType: { 
+    type: { 
         type: String, 
-        enum: ['deposit', 'withdrawal', 'transfer'], 
+        enum: ['deposit', 'withdraw', 'transfer'], 
         required: true 
     },
-    transactionStatus: { 
+    status: { 
         type: String, 
         enum: ['pending', 'completed', 'failed'], 
-        required: true 
+        required: true,
+        default: 'pending'
     },
     amount: { 
         type: Number, 
@@ -33,10 +34,6 @@ const transactionSchema = new Schema({
     createdAt: { 
         type: Date, 
         default: Date.now 
-    },
-    performedBy: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'Client',
     },
     description: { 
         type: String 
