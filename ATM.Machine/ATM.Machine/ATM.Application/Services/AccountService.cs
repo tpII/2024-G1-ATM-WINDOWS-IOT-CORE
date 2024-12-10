@@ -9,13 +9,11 @@ namespace ATM.Application.Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ITransactionRepository _transactionRepository;
-        private readonly SessionService _sessionService;
 
-        public AccountService(IAccountRepository accountRepository, ITransactionRepository transactionRepository, SessionService sessionService)
+        public AccountService(IAccountRepository accountRepository, ITransactionRepository transactionRepository)
         {
             _accountRepository = accountRepository;
             _transactionRepository = transactionRepository;
-            _sessionService = sessionService;
         }
 
         public async Task<decimal> GetBalanceAsync(string accountId)
@@ -26,7 +24,8 @@ namespace ATM.Application.Services
         public async Task DepositAsync(string accountId, decimal amount)
         {
             // Crear la transacción de depósito
-            var transaction = new Transaction(accountId, _sessionService.CardId, amount, TransactionType.Deposit,
+            Console.WriteLine($"In service: {amount}, {accountId}");
+            var transaction = new Transaction(accountId, amount, TransactionType.Deposit,
                 TransactionStatus.Pending, DateTime.UtcNow, "Deposito");
 
             // Enviar la solicitud al servidor para registrar la transacción
@@ -36,17 +35,17 @@ namespace ATM.Application.Services
         public async Task WithdrawAsync(string accountId, decimal amount)
         {
             // Crear la transacción de retiro
-            var transaction = new Transaction(accountId, _sessionService.CardId, amount, TransactionType.Withdraw,
+            var transaction = new Transaction(accountId, amount, TransactionType.Withdraw,
                 TransactionStatus.Pending, DateTime.UtcNow, "Retiro en efectivo");
 
             // Enviar la solicitud al servidor para registrar la transacción
             await _transactionRepository.AddAsync(transaction);
         }
 
-        public async Task TransferAsync(string sourceAccountId, string destinationAccountId, decimal amount)
+        public async Task TransferAsync(string sourceAccountId, string destinationCbu, decimal amount)
         {
             // Crear la transacción de transferencia
-            var transaction = new Transaction(sourceAccountId, _sessionService.CardId, destinationAccountId, 
+            var transaction = new Transaction(sourceAccountId,  destinationCbu, 
                     amount, TransactionType.Transfer, TransactionStatus.Pending, 
                     DateTime.UtcNow, "Transferencia entre cuentas");
 

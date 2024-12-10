@@ -1,4 +1,5 @@
 using ATM.Application.Interfaces.Services;
+using ATM.Application.Services;
 
 namespace ATM.Application.UseCases
 {
@@ -6,14 +7,18 @@ namespace ATM.Application.UseCases
     {
         private readonly IAccountService _accountService;
 
-        public CheckBalance(IAccountService accountService)
+        private readonly SessionService _sessionService;
+
+        public CheckBalance(IAccountService accountService, SessionService sessionService)
         {
             _accountService = accountService;
+            _sessionService = sessionService;
         }
 
-        public async Task<decimal> ExecuteAsync(string accountId)
+        public async Task<decimal> ExecuteAsync()
         {
-            return await _accountService.GetBalanceAsync(accountId);
+            Console.WriteLine($"AccountId: {_sessionService.GetAccountId()}");
+            return await _accountService.GetBalanceAsync(_sessionService.GetAccountId());
         }
     }
 }

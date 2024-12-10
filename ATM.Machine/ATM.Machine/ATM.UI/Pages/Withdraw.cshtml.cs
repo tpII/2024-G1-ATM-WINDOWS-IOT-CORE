@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ATM.UI.Pages;
 
-public class DepositModel : PageModel
+public class WithdrawModel : PageModel
 {
-    private readonly Deposit _deposit;
+    private readonly Withdraw _withdraw;
 
-    public DepositModel(Deposit deposit)
+    public WithdrawModel(Withdraw withdraw)
     {
-        _deposit = deposit;
+        _withdraw = withdraw;
     }
 
     [BindProperty]
@@ -24,12 +24,12 @@ public class DepositModel : PageModel
     {
         try
         {
-            await _deposit.ExecuteAsync(Amount); // Llama al caso de uso para realizar el depósito
-            SuccessMessage = $"Successfully deposited {Amount:C}.";
+            await _withdraw.ExecuteAsync(Amount);
+            SuccessMessage = $"Successfully withdrawed {Amount:C}.";
         }
         catch (Exception ex)
         {
-            ErrorMessage = ex.Message + $" {Amount}";
+            ErrorMessage = ex.Message;
         }
 
         return Page(); // Devuelve la misma página para mostrar el resultado

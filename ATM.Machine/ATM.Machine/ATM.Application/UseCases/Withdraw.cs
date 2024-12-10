@@ -1,4 +1,5 @@
 using ATM.Application.Interfaces.Services;
+using ATM.Application.Services;
 
 namespace ATM.Application.UseCases
 {
@@ -6,15 +7,18 @@ namespace ATM.Application.UseCases
     {
         private readonly IAccountService _accountService;
 
-        public Withdraw(IAccountService accountService)
+        private readonly SessionService _sessionService;
+
+        public Withdraw(IAccountService accountService, SessionService sessionService)
         {
             _accountService = accountService;
+            _sessionService = sessionService;
         }
 
-        public async Task ExecuteAsync(string accountId, decimal amount)
+        public async Task ExecuteAsync(decimal amount)
         {
             // Realiza el retiro a través del servicio AccountService
-            await _accountService.WithdrawAsync(accountId, amount);
+            await _accountService.WithdrawAsync(_sessionService.GetAccountId(), amount);
         }
     }
 }

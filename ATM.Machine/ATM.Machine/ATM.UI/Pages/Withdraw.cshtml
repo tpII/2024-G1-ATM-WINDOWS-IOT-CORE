@@ -1,16 +1,16 @@
-﻿@page
-@model ATM.UI.Pages.DepositModel
+@page
+@model ATM.UI.Pages.WithdrawModel
 @{
-    ViewData["Title"] = "Deposit";
+    ViewData["Title"] = "Withdraw";
 }
 
-<h1>Deposit Money</h1>
+<h1>Withdraw Money</h1>
 
 <form method="post">
     <label for="amount">Amount:</label>
     <input type="number" id="amount" name="Amount" asp-for="Amount" step="0.01" min="0.01" required />
     <br />
-    <button type="submit">Deposit</button>
+    <button type="submit">Withdraw</button>
 </form>
 
 @if (!string.IsNullOrEmpty(Model.SuccessMessage))

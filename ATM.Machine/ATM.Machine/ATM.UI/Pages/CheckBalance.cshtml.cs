@@ -12,28 +12,19 @@ public class CheckBalanceModel : PageModel
     {
         _checkBalance = checkBalance;
     }
-
-    [BindProperty]
-    public string AccountId { get; set; }
     public decimal? Balance { get; set; }
     public string? ErrorMessage { get; set; }
 
     // Este método se ejecuta cuando se envía el formulario
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
-        if (string.IsNullOrEmpty(AccountId))
-        {
-            ErrorMessage = "Account ID cannot be empty.";
-            return Page(); // Devuelve la misma página para mostrar el error
-        }
-
         try
         {
-            Balance = await _checkBalance.ExecuteAsync(AccountId); // Llama al caso de uso para obtener el balance
+            Balance = await _checkBalance.ExecuteAsync(); // Llama al caso de uso para obtener el balance
         }
         catch (Exception ex)
         {
-            ErrorMessage = ex.Message;
+            ErrorMessage = "Error al obtener balance: " + ex.Message;
         }
 
         return Page(); // Devuelve la misma página para mostrar el resultado

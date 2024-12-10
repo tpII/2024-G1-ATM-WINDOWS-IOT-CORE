@@ -1,4 +1,5 @@
 using ATM.Application.Interfaces.Services;
+using ATM.Application.Services;
 
 namespace ATM.Application.UseCases
 {
@@ -6,15 +7,18 @@ namespace ATM.Application.UseCases
     {
         private readonly IAccountService _accountService;
 
-        public Transfer(IAccountService accountService)
+        private readonly SessionService _sessionService;
+
+        public Transfer(IAccountService accountService, SessionService sessionService)
         {
             _accountService = accountService;
+            _sessionService = sessionService;
         }
 
-        public async Task ExecuteAsync(string sourceAccountId, string destinationAccountId, decimal amount)
+        public async Task ExecuteAsync(string destinationCbu, decimal amount)
         {
             // Realiza la transferencia a través del servicio AccountService
-            await _accountService.TransferAsync(sourceAccountId, destinationAccountId, amount);
+            await _accountService.TransferAsync(_sessionService.GetAccountId(), destinationCbu, amount);
         }
     }
 }

@@ -4,13 +4,7 @@
     ViewData["Title"] = "Check Balance";
 }
 
-<h1>Check Account Balance</h1>
-
-<form method="post"> 
-    <label for="accountId">Account ID:</label>
-    <input type="text" id="accountId" name="AccountId" asp-for="AccountId" required /> 
-    <button type="submit">Check Balance</button>
-</form>
+<h1>Balance</h1>
 
 @if (Model.Balance.HasValue)
 {

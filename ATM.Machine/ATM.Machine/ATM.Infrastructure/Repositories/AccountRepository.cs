@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ATM.Application.Interfaces.Repositories;
 using ATM.Domain.Entities;
+using ATM.Infrastructure.Utils;
 
 namespace ATM.Infrastructure.Repositories
 {
@@ -19,10 +20,10 @@ namespace ATM.Infrastructure.Repositories
         public async Task<Account?> GetByIdAsync(string id)
         {
             // Crear el objeto del cuerpo de la solicitud
-            var requestBody = new { id = id};
+            var requestBody = new { Id = id };
 
             // Serializar a JSON
-            var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+            var content = new StringContent(CustomJsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
             // Enviar la solicitud POST
             var response = await _httpClient.PostAsync("api/accounts/get-by-id", content);
@@ -36,26 +37,24 @@ namespace ATM.Infrastructure.Repositories
 
         public async Task<decimal> GetBalanceAsync(string accountId)
         {
-            // Crear el objeto del cuerpo de la solicitud
-            var requestBody = new { accountId = accountId};
 
-            // Serializar a JSON
-            var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+            Console.WriteLine($"AccounId: {accountId}");
 
             // Enviar la solicitud POST
-            var response = await _httpClient.PostAsync("api/accounts/check-balance", content);
+            var response = await _httpClient.GetAsync($"api/accounts/balance/{accountId}");
 
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException("Failed to retrieve balance.");
 
             var responseContent = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<GetBalanceResponse>(responseContent).balance;
+            var payload = responseContent.Deserialize<BalanceResponse>();
+            return payload.Balance;
         }
 
         public async Task<bool> ExistsAsync(string accountId)
         {
             // Crear el objeto del cuerpo de la solicitud
-            var requestBody = new { accountId = accountId };
+            var requestBody = new { AccountId = accountId };
 
             // Serializar a JSON
             var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
@@ -63,16 +62,12 @@ namespace ATM.Infrastructure.Repositories
             // Enviar la solicitud POST
             var response = await _httpClient.PostAsync("api/accounts/exists", content);
 
-            if (!response.IsSuccessStatusCode)
-                return false;
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<bool>(responseContent);
+            return response.IsSuccessStatusCode;
         }
     }
+}
 
-    public class GetBalanceResponse{
-        public decimal balance {get; set;}
-        public bool Success {get; set;}
-    }
+public class BalanceResponse
+{
+    public decimal Balance { get; set; }
 }

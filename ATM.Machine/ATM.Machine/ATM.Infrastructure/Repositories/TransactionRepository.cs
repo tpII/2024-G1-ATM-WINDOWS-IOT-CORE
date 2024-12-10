@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ATM.Application.Interfaces.Repositories;
 using ATM.Domain.Entities;
+using ATM.Infrastructure.Utils;
 
 namespace ATM.Infrastructure.Repositories;
 public class TransactionRepository : ITransactionRepository
@@ -23,7 +24,7 @@ public class TransactionRepository : ITransactionRepository
         var requestBody = new { AccountId = accountId };
 
         // Serializar el objeto a JSON
-        var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+        var content = new StringContent(CustomJsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
         // Enviar la solicitud POST al servidor Node.js
         var response = await _httpClient.PostAsync("api/transactions/get-by-account-id", content);
@@ -34,7 +35,7 @@ public class TransactionRepository : ITransactionRepository
 
         // Leer el contenido de la respuesta y deserializarlo
         var responseContent = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<IEnumerable<Transaction>>(responseContent);
+        return responseContent.Deserialize<IEnumerable<Transaction>>();
     }
 
     // Método para agregar una nueva transacción
@@ -42,19 +43,29 @@ public class TransactionRepository : ITransactionRepository
     {
         var payload = new { 
             AccountId = transaction.AccountId,
-            CardId = transaction.CardId,
             Amount = transaction.Amount,
+            DestinationCbu = transaction.DestinationCbu,
             Type = transaction.Type,
             Description = transaction.Description,
         };
         // Serializar la transacción a JSON
-        var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+        var content = new StringContent(CustomJsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+
+        Console.WriteLine($"Sending: {content}");
 
         // Enviar la solicitud POST al servidor Node.js
         var response = await _httpClient.PostAsync("api/transactions/", content);
 
         // Verificar si la respuesta es exitosa
-        if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException("Failed to add transaction.");
+        if (!response.IsSuccessStatusCode) {
+            var responseContent = await response.Content.ReadAsStringAsync();
+            throw new HttpRequestException("Error al realizar la transación" + responseContent.Deserialize<AddResponse>().Message);
+        }
     }
+}
+
+public class AddResponse
+{
+    public bool? Success {get; set;}
+    public string? Message {get; set;}
 }
