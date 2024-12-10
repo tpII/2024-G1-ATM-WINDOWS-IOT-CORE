@@ -1,10 +1,12 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Enter Card";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1 id="main-message" class="display-4">Acerque su tarjeta al lector</h1>
+
+<div id="side-message">Esperando tarjeta...</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/cardNotification.js"></script>

@@ -11,39 +11,39 @@ using System.Text.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfaces
+
+var uri = new Uri("http://localhost:5010");
 
 // Configurar el repositorio de tarjetas con HttpClient
 builder.Services.AddHttpClient<ICardRepository, CardRepository>(client =>
 {
-    client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor en la PC
+    client.BaseAddress = uri; // IP del servidor Node.js
 });
 
 // Configurar el repositorio de cuentas con HttpClient
 builder.Services.AddHttpClient<IAccountRepository, AccountRepository>(client =>
 {
-    client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor en la PC
+    client.BaseAddress = uri; // IP del servidor Node.js
 });
 
 // Configurar el repositorio de transacciones con HttpClient
 builder.Services.AddHttpClient<ITransactionRepository, TransactionRepository>(client =>
 {
-    client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor en la PC
+    client.BaseAddress = uri; // IP del servidor Node.js
 });
 
 // Configurar el repositorio de configuración de límites del cajero ATM
 builder.Services.AddHttpClient<IATMConfigurationRepository, ATMConfigurationRepository>(client =>
 {
-    client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor Node.js
+    client.BaseAddress = uri; // IP del servidor Node.js
 });
 
 //Configurar el repositorio de control de dinero en el cajero ATM 
 builder.Services.AddHttpClient<ICashManagementRepository, CashManagementRepository>(client =>
 {
-    client.BaseAddress = new Uri("http://192.168.0.148:5000"); // IP del servidor Node.js
+    client.BaseAddress = uri; // IP del servidor Node.js
 });
-builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfaces
 
 // Registrar servicios
 builder.Services.AddTransient<IEncryptionService, EncryptionService>();
