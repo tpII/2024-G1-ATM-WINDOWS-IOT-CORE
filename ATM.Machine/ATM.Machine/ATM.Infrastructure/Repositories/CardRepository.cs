@@ -19,7 +19,7 @@ public class CardRepository : ICardRepository
 
     public async Task<bool> ExistsAsync(string id)
     {
-        var response = await _httpClient.GetAsync($"api/cards/{id}/exists");
+        var response = await _httpClient.GetAsync($"api/cards/exists/{id}");
 
         return response.IsSuccessStatusCode;
     }

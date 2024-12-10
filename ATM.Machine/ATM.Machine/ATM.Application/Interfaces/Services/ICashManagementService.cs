@@ -1,10 +1,10 @@
-using System;
+using System.Threading.Tasks;
 
-namespace ATM.Application.Interfaces.Services;
-
-public interface ICashManagementService
+namespace ATM.Application.Interfaces.Services
 {
-    int GetAvailableCash();
-    void LoadCash(int amount);
-    int DispenseCash(int amount);
+    public interface ICashManagementService
+    {
+        Task<int> GetAvailableCashAsync();
+        Task LoadCashAsync(int amount);
+    }
 }

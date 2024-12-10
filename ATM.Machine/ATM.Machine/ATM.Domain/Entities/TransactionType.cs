@@ -4,7 +4,7 @@ namespace ATM.Domain.Entities;
 
 public enum TransactionType
 {
-    Withdrawal, // Retiro
+    Withdraw, // Retiro
     Deposit,    // Depósito
     Transfer    // Transferencia
 }
