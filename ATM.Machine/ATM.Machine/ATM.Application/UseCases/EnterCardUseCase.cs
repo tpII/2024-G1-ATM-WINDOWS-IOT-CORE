@@ -12,9 +12,8 @@ public class EnterCardUseCase
         _sessionService = sessionService;
     }
 
-    public async Task<bool> ExecuteAsync(string id)
+    public async Task<bool> ExecuteAsync(string number)
     {
-        var cardExists = await _sessionService.VerifyCardAsync(id);
-        return cardExists;
+        return await _sessionService.VerifyCardAsync(number);
     }
 }

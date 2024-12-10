@@ -12,9 +12,8 @@ public class EnterPinUseCase
         _sessionService = sessionService;
     }
 
-    public async Task<bool> ExecuteAsync(int pin)
+    public async Task<bool> ExecuteAsync(string pin)
     {
-        var isCorrect = await _sessionService.VerifyPinAsync(pin);
-        return isCorrect;
+        return await _sessionService.VerifyPinAsync(pin);
     }
 }

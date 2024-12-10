@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ATM.Application.Interfaces.Services;
 using ATM.Application.Services;
 using ATM.Application.UseCases;
+using System.Linq;
 
 namespace ATM.UI.Pages;
 
@@ -11,14 +12,14 @@ public class EnterPinModel : PageModel
     private readonly EnterPinUseCase _useCase;
 
     [BindProperty]
-    public int Pin { get; set; }
+    public string Pin { get; set; }
 
     public string? Message { get; private set; }
 
     public EnterPinModel(EnterPinUseCase useCase)
     {
         _useCase = useCase;
-        Pin = 0;
+        Pin = "";
     }
 
     public void OnGet()
@@ -27,9 +28,15 @@ public class EnterPinModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (Pin == 0)
+        if (string.IsNullOrEmpty(Pin))
         {
             Message = "Se requiere que ingrese un PIN.";
+            return Page();
+        }
+
+        if(!(Pin.Length == 4 && Pin.All(char.IsDigit)))
+        {
+            Message = "El formato del pin es incorrecto. Ingrese solo 4 valores numéricos";
             return Page();
         }
 
