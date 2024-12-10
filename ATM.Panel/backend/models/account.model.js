@@ -3,14 +3,12 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const accountSchema = new Schema({
-    accountNumber: { 
+    number: { 
         type: String, 
         required: true, 
-        unique: true 
     },
     cbu: {
         type: String,
-        unique: true,
         required: true
     },
     clientId: { 
@@ -32,6 +30,9 @@ const accountSchema = new Schema({
     timestamps: true
 });
 
+accountSchema.index({ number: 1, cbu: 1 }, { unique: true });
+
 const Account = model('Account', accountSchema);
 
 export default Account;
+  

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const cardSchema = new Schema({
-    cardNumber: { 
+    number: { 
         type: String, 
         required: true, 
         unique: true 
@@ -28,9 +28,9 @@ const cardSchema = new Schema({
     },
     expirationDate: { 
         type: String, 
-        required: true, 
+        required: true,
         match: /^(0[1-9]|1[0-2])\/\d{2}$/ // Validar formato MM/YY
-    },
+    }
 }, {
     timestamps: true // Agrega createdAt y updatedAt automáticamente
 });

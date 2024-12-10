@@ -37,7 +37,7 @@ export const createAccount = async (req, res) => {
     }
 
     // Validar campos obligatorios
-    if (!account.accountNumber || !account.cbu || !account.clientId) {
+    if (!account.number || !account.cbu || !account.clientId) {
         return res.status(400).json({ 
             success: false, 
             message: "Por favor provea todos los campos" 
@@ -54,23 +54,6 @@ export const createAccount = async (req, res) => {
             });
         }
 
-        // Comprobar si ya existe una cuenta con ese CBU
-        let existentAccount = await Account.findOne({ cbu: account.cbu });
-        if (existentAccount) {
-            return res.status(400).json({ 
-                success: false, 
-                message: `CBU ya registrado` 
-            });
-        }
-
-        existentAccount = await Account.findOne({ accountNumber: account.accountNumber });
-        if (existentAccount) {
-            return res.status(400).json({ 
-                success: false, 
-                message: `Numero de cuenta ya registrado` 
-            });
-        }
-
         // Crear nueva cuenta
         const newAccount = new Account(account);
 
@@ -78,6 +61,13 @@ export const createAccount = async (req, res) => {
         res.status(201).json({ success: true, data: newAccount });
     } catch (error) {
         console.error(`Error al crear una cuenta: ${error.message}`);
+        if (error.code === 11000) {
+            const duplicateKey = Object.keys(error.keyPattern)[0];
+            return res.status(400).json({
+                success: false,
+                message: `El campo ${duplicateKey} ya existe.`
+            });
+        }
         res.status(500).json({
             success: false,
             message: "Error del servidor",
@@ -93,12 +83,19 @@ export const deleteAccount = async (req,res) => {
     {
         return res.status(404).json({ 
             success: false, 
-            message: "ID del cliente inválido" 
+            message: "ID inválido" 
         });
     }
 
     try {
-        await Account.findByIdAndDelete(id);
+        const deletedAccount = await Account.findByIdAndDelete(id);
+        if (!deletedAccount) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Cuenta no encontrada" 
+            });
+        }
+
         res.status(200).json({ success: true, message: "Cuenta borrada" });
     } catch (error) {
         console.log("Error al borrar una cuenta: ", error.message);
