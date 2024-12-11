@@ -8,6 +8,8 @@ import Transacciones from './Pages/Transacciones';
 import AgregarCuenta from './Pages/AgregarCuenta';
 import AgregarCliente from './Pages/AgregarCliente'; 
 import AgregarTarjeta from './Pages/AgregarTarjeta';
+import LimitesExtraccion from './Pages/LimitesExtraccion';
+import DineroDisponible from './Pages/DineroDisponible';
 
 import './App.css';
 
@@ -23,6 +25,8 @@ function App() {
         <Route path="/clientes/agregar" element={<AgregarCliente />} />
         <Route path="/cuentas/agregar" element={<AgregarCuenta />} />
         <Route path="/tarjetas/agregar" element={<AgregarTarjeta />} />
+        <Route path="/limites-extraccion" element={<LimitesExtraccion />} />
+        <Route path="/dinero-disponible" element={<DineroDisponible />} />
       </Routes>
     </Router>
   );

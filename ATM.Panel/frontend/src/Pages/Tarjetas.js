@@ -17,6 +17,7 @@ function Tarjetas() {
       const response = await fetch('http://localhost:5000/api/cards');
       const data = await response.json();
       setTarjetas(data.data);  // Asumiendo que 'data' es la clave que contiene la lista de clientes
+      setTotalTarjetas(data.data.length); 
       setLoading(false);
     } catch (error) {
       console.log('Error al cargar las tarjetas:', error);
