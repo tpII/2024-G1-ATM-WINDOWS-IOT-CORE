@@ -1,20 +1,19 @@
 ﻿@page
 @model ATM.UI.Pages.EnterPinModel
 @{
-    ViewData["Title"] = "Enter Pin";
+    ViewData["Title"] = "Ingreso de PIN";
 }
 
-<h1 class="display-4">Ingrese el pin de la tarjeta</h1>
+<h1>Ingrese su PIN</h1>
+<p class="lead">Por favor, ingrese su PIN usando el teclado numérico.</p>
 
-<form method="post">
-    <div>
-        <label for="pin">PIN</label>
-        <input type="password" id="pin" name="Pin" asp-for="Pin" required />
-    </div>
-    <button type="submit">Confirmar</button>
+<div id="notification" class="alert alert-info d-none">
+    Ha sido redirigido por inactividad.
+</div>
+
+<form method="post" id="pin-form">
+    <input type="password" id="pin" name="pin" asp-for="Pin" maxlength="4" class="form-control mb-3" placeholder="****" autofocus />
+    <button type="submit" class="btn btn-primary">Enviar</button>
 </form>
 
-@if (!string.IsNullOrEmpty(Model.Message))
-{
-    <p>@Model.Message</p>
-}
+<script src="~/js/activity.js"></script>

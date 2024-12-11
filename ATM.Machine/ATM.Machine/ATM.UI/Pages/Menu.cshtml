@@ -1,15 +1,20 @@
 ﻿@page
 @model ATM.UI.Pages.MenuModel
 @{
-    ViewData["Title"] = "Menu";
+    ViewData["Title"] = "Menú de Operaciones";
 }
 
-<h1 class="mb-4">Menú de Operaciones Bancarias</h1>
-
-<div class="list-group">
-    <a href="/Deposit" class="list-group-item list-group-item-action btn btn-primary">Depositar</a>
-    <a href="/Withdraw" class="list-group-item list-group-item-action btn btn-primary">Retirar</a>
-    <a href="/Transfer" class="list-group-item list-group-item-action btn btn-primary">Transferir</a>
-    <a href="/CheckBalance" class="list-group-item list-group-item-action btn btn-primary">Ver Balance</a>
-    @* <a href="/Exit" class="list-group-item list-group-item-action btn btn-danger">Salir</a> *@
+<div class="menu-container">
+    <h1>Menú de Operaciones</h1>
+    <div class="button-container">
+        <a class="btn-operation" href="/Deposit">Depositar</a>
+        <a class="btn-operation" href="/Withdraw">Retirar</a>
+        <a class="btn-operation" href="/Transfer">Transferir</a>
+        <a class="btn-operation" href="/CheckBalance">Ver Balance</a>
+        <form method="post" asp-page-handler="LogOut" class="form-button">
+            <button type="submit" class="btn-operation logout">Salir</button>
+        </form>
+    </div>
 </div>
+
+<script src="~/js/activity.js"></script>
