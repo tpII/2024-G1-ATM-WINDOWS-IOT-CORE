@@ -1,12 +1,19 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Enter Card";
+    ViewData["Title"] = "Bienvenida";
 }
 
-<h1 id="main-message" class="display-4">Acerque su tarjeta al lector</h1>
+@* <h1 id="main-message" class="display-4">Acerque su tarjeta al lector</h1>
 
-<div id="side-message">Esperando tarjeta...</div>
+<div id="side-message">Esperando tarjeta...</div> *@
+
+<h1>Bienvenido</h1>
+<p class="lead">Por favor, acerque su tarjeta al lector para iniciar sesión.</p>
+
+<div id="status" class="alert alert-info">
+    Esperando lectura de tarjeta...
+</div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/cardNotification.js"></script>

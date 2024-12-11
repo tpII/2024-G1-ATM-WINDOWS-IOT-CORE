@@ -51,15 +51,13 @@ public class TransactionRepository : ITransactionRepository
         // Serializar la transacción a JSON
         var content = new StringContent(CustomJsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
 
-        Console.WriteLine($"Sending: {content}");
-
         // Enviar la solicitud POST al servidor Node.js
         var response = await _httpClient.PostAsync("api/transactions/", content);
 
         // Verificar si la respuesta es exitosa
         if (!response.IsSuccessStatusCode) {
             var responseContent = await response.Content.ReadAsStringAsync();
-            throw new HttpRequestException("Error al realizar la transación" + responseContent.Deserialize<AddResponse>().Message);
+            throw new HttpRequestException(responseContent.Deserialize<AddResponse>().Message);
         }
     }
 }

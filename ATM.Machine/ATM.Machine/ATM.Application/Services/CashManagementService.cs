@@ -6,21 +6,29 @@ namespace ATM.Application.Services
 {
     public class CashManagementService : ICashManagementService
     {
-        private readonly ICashManagementRepository _repository;
+        public decimal AvailableCash { get; private set; }
 
-        public CashManagementService(ICashManagementRepository repository)
+        public CashManagementService()
         {
-            _repository = repository;
+            AvailableCash = 0;
         }
 
-        public async Task<int> GetAvailableCashAsync()
+        public Task<decimal> GetAvailableCashAsync()
         {
-            return await _repository.GetAvailableCashAsync();
+            return Task.FromResult<decimal>(AvailableCash);
         }
 
-        public async Task LoadCashAsync(int amount)
+        public Task DispenseCashAsync(decimal amount)
         {
-            await _repository.LoadCashAsync(amount);
+            AvailableCash -= amount;
+            return Task.CompletedTask;
+        }
+
+        public Task LoadCashAsync(decimal amount)
+        {
+            AvailableCash += amount;
+            //USE repository to load cash
+            return Task.CompletedTask;
         }
     }
 }

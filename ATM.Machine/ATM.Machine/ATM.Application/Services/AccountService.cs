@@ -24,7 +24,6 @@ namespace ATM.Application.Services
         public async Task DepositAsync(string accountId, decimal amount)
         {
             // Crear la transacción de depósito
-            Console.WriteLine($"In service: {amount}, {accountId}");
             var transaction = new Transaction(accountId, amount, TransactionType.Deposit,
                 TransactionStatus.Pending, DateTime.UtcNow, "Deposito");
 

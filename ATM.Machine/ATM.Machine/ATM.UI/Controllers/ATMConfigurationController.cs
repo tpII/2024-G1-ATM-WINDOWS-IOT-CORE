@@ -1,19 +1,26 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using ATM.Application.Interfaces.Services;
+using ATM.Application.Services;
+using ATM.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATM.UI.Controllers
 {
     [ApiController]
-    [Route("api/atm/configuration")]
+    [Route("api/config")]
     public class ATMConfigurationController : ControllerBase
     {
-        private readonly IATMConfigurationService _service;
+        private readonly ATMConfigurationService _service;
 
-        public ATMConfigurationController(IATMConfigurationService service)
+        public ATMConfigurationController(ATMConfigurationService service)
         {
             _service = service;
+        }
+
+        [HttpGet("get-status")]
+        public IActionResult GetStatus()
+        {
+            return Ok();
         }
 
         [HttpPost("set-limits")]
@@ -27,7 +34,14 @@ namespace ATM.UI.Controllers
         public async Task<IActionResult> GetWithdrawalLimits()
         {
             var limits = await _service.GetWithdrawalLimitsAsync();
-            return Ok(limits);
+
+            var response = new
+            {
+                MaxLimit = limits.MaxLimit,
+                MinLimit = limits.MinLimit
+            };
+
+            return Ok(response);
         }
 
         public class SetWithdrawalLimitsRequest

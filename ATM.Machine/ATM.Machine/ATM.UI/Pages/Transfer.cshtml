@@ -1,27 +1,32 @@
 @page
 @model ATM.UI.Pages.TransferModel
 @{
-    ViewData["Title"] = "Transfer";
+    ViewData["Title"] = "Transferencia";
 }
 
-<h1>Transfer Money</h1>
+<h1>Transferencia</h1>
 
 <form method="post">
-    <label for="destinationCbu">Destination CBU:</label>
-    <input type="text" id="destinationCbu" name="DestinationCbu" asp-for="DestinationCbu" required />
-    <br />
-    <label for="amount">Amount:</label>
-    <input type="number" id="amount" name="Amount" asp-for="Amount" step="0.01" min="0.01" required />
-    <br />
-    <button type="submit">Transfer</button>
+    <div class="form-group">
+        <label class="form-label" for="DestinationCbu">CBU de la cuenta destino:</label>
+        <input type="text" id="DestinationCbu" name="DestinationCbu" asp-for="DestinationCbu" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="Amount">Monto a transferir:</label>
+        <input type="number" id="Amount" name="Amount" asp-for="Amount" step="0.01" min="0.01" class="form-control" placeholder="0.00" required />
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Confirmar</button>
+        <a asp-page="/Menu" class="btn btn-secondary">Cancelar</a>
+    </div>
 </form>
-
-@if (!string.IsNullOrEmpty(Model.SuccessMessage))
-{
-    <p style="color: green;">@Model.SuccessMessage</p>
-}
+<div>
+    <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+</div>
 
 @if (!string.IsNullOrEmpty(Model.ErrorMessage))
 {
-    <p style="color: red;">@Model.ErrorMessage</p>
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
 }
+
+<script src="~/js/activity.js"></script>
