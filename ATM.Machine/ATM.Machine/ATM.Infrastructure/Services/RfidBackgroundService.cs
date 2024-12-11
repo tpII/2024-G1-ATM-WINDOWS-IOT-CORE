@@ -37,11 +37,12 @@ public class RfidBackgroundService : BackgroundService
 
                     byte[] uid = await _rfidReader.ReadCardIdAsync(stoppingToken);
 
-                    string cardId = BitConverter.ToString(uid).Replace("-", "");
+                    string number = BitConverter.ToString(uid).Replace("-", "");
 
-                    if (!string.IsNullOrEmpty(cardId))
+                    if (!string.IsNullOrEmpty(number))
                     {
-                        bool isValid = await _useCase.ExecuteAsync(cardId);
+                        Console.WriteLine($"Nro de la tarjeta: {number}");
+                        bool isValid = await _useCase.ExecuteAsync(number);
                         await _hubContext.Clients.All.SendAsync("CardDetected", isValid, stoppingToken);
                     }
                 }
