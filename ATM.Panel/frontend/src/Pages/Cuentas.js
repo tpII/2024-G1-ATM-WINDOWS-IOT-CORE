@@ -17,6 +17,7 @@ function Cuentas() {
       const response = await fetch('http://localhost:5000/api/accounts');
       const data = await response.json();
       setCuentas(data.data);  // Asumiendo que 'data' es la clave que contiene la lista de clientes
+      setTotalCuentas(data.data.length); 
       setLoading(false);
     } catch (error) {
       console.log('Error al cargar las cuentas:', error);

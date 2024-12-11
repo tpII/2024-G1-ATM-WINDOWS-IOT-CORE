@@ -5,6 +5,7 @@ import './Clientes.css'; // Asegúrate de tener un archivo de estilos
 function Clientes() {
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalClientes, setTotalClientes] = useState(0);
 
   // Simulando la carga de datos de clientes
   useEffect(() => {
@@ -16,6 +17,7 @@ function Clientes() {
       const response = await fetch('http://localhost:5000/api/clients');
       const data = await response.json();
       setClientes(data.data);  // Asumiendo que 'data' es la clave que contiene la lista de clientes
+      setTotalClientes(data.data.length); 
       setLoading(false);
     } catch (error) {
       console.log('Error al cargar los clientes:', error);
@@ -48,6 +50,7 @@ function Clientes() {
   return (
     <div className="clientes-container">
       <h1>Clientes</h1>
+      <p>Total de clientes: {totalClientes}</p>
       <div>
         <Link to="/clientes/agregar">
           <button className="btn agregar-btn">Agregar Cliente</button>
