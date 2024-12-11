@@ -11,6 +11,13 @@ namespace ATM.Application.Services
 
         public Task SetWithdrawalLimitsAsync(decimal maxLimit, decimal minLimit)
         {
+            if(minLimit < 0 || maxLimit < 0)
+            {
+                throw ArgumentOutOfRangeException("Los límites deben ser mayores o iguales a cero");
+            }
+            if(maxLimit < minLimit) {
+                throw ArgumentException("El limite máximo debe ser mayor o igual al límite mínimo");
+            }
             MaxLimit = maxLimit;
             MinLimit = minLimit;
             return Task.CompletedTask;

@@ -27,7 +27,14 @@ namespace ATM.UI.Controllers
         [HttpPost("set-limits")]
         public async Task<IActionResult> SetWithdrawalLimits([FromBody] SetWithdrawalLimitsRequest request)
         {
-            await _service.SetWithdrawalLimitsAsync(request.MaxLimit, request.MinLimit);
+            try
+            {
+                await _service.SetWithdrawalLimitsAsync(request.MaxLimit, request.MinLimit);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok();
         }
 
