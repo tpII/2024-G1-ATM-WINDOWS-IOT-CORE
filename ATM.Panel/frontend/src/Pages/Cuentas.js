@@ -13,22 +13,34 @@ function Cuentas() {
   }, []);
 
   const fetchCuentas = async () => {
-    // Aquí iría la lógica para obtener las cuentas desde el backend
-    // Simulando cuentas por ahora:
-    const cuentasData = [
-      { id: 1, number: '123456789', cbu: '1234567890', balance: 5000 },
-      { id: 2, number: '987654321', cbu: '0987654321', balance: 10000 },
-      { id: 3, number: '112233445', cbu: '1122334455', balance: 15000 },
-    ];
-    setCuentas(cuentasData);
-    setTotalCuentas(cuentasData.length); // Total de cuentas
-    setLoading(false);
+    try {
+      const response = await fetch('http://localhost:5000/api/accounts');
+      const data = await response.json();
+      setCuentas(data.data);  // Asumiendo que 'data' es la clave que contiene la lista de clientes
+      setLoading(false);
+    } catch (error) {
+      console.log('Error al cargar las cuentas:', error);
+      setLoading(false);
+    }
   };
 
-  const eliminarCuenta = (id) => {
+  const eliminarCuenta = async (id) => {
     if (window.confirm('¿Estás seguro de eliminar esta cuenta?')) {
-      setCuentas(cuentas.filter(cuenta => cuenta.id !== id));
-      // Aquí iría la lógica para eliminar la cuenta desde la API
+      try {
+        const response = await fetch(`http://localhost:5000/api/accounts/${id}`, {
+          method: 'DELETE',
+        });
+  
+        const result = await response.json();
+        if (result.success) {
+          setCuentas(cuentas.filter(cuenta => cuenta._id !== id));
+          console.log('Cuenta eliminada');
+        } else {
+          console.error('Error al eliminar cuenta:', result.message);
+        }
+      } catch (error) {
+        console.error('Error al eliminar cuenta:', error);
+      }
     }
   };
 
@@ -60,7 +72,7 @@ function Cuentas() {
                 <td>{cuenta.cbu}</td>
                 <td>${cuenta.balance}</td>
                 <td>
-                  <button className="btn eliminar-btn" onClick={() => eliminarCuenta(cuenta.id)}>
+                  <button className="btn eliminar-btn" onClick={() => eliminarCuenta(cuenta._id)}>
                     Eliminar
                   </button>
                 </td>

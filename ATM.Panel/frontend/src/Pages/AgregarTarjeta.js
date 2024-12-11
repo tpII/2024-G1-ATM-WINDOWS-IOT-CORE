@@ -11,6 +11,7 @@ function AgregarTarjeta() {
   const [pinError, setPinError] = useState('');
   const navigate = useNavigate();
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -22,10 +23,28 @@ function AgregarTarjeta() {
     }
     
     setPinError(''); // Limpiar error si el PIN es válido
-
-    // Aquí iría la lógica para enviar los datos al servidor (API)
-    console.log('Tarjeta agregada:', { number, pin, expirationDate, clientId, accountId });
-    navigate('/Tarjetas'); // Redirigir a la página de cuentas
+  
+    const tarjeta = { number: number, pin: pin, clientId: clientId, accountId: accountId, expirationDate: expirationDate };
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/cards', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tarjeta),
+      });
+  
+      const result = await response.json();
+      if (result.success) {
+        console.log('Tarjeta agregada:', result.data);
+        navigate('/tarjetas'); // Redirige después de agregar
+      } else {
+        console.log('Error al agregar tarjeta:', result.message);
+      }
+    } catch (error) {
+      console.error('Error en el servidor:', error);
+    }
   };
 
   return (

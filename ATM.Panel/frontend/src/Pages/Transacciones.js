@@ -12,45 +12,37 @@ function Transacciones() {
   }, []);
 
   const fetchTransacciones = async () => {
-    // Aquí iría la lógica para obtener las transacciones desde el backend
-    // Simulando datos:
-    const transaccionesData = [
-      {
-        id: 1,
-        transactionType: 'deposit',
-        transactionStatus: 'completed',
-        amount: 500,
-        accountId: 'A12345',
-        cardId: 'C98765',
-        destinationAccountId: null,
-        createdAt: '2024-12-01T10:30:00Z',
-        performedBy: 'Client01',
-        description: 'Depósito inicial',
-      },
-      {
-        id: 2,
-        transactionType: 'withdrawal',
-        transactionStatus: 'pending',
-        amount: 300,
-        accountId: 'A67890',
-        cardId: null,
-        destinationAccountId: null,
-        createdAt: '2024-12-02T15:45:00Z',
-        performedBy: 'Client02',
-        description: 'Retiro en efectivo',
-      },
-    ];
-    setTransacciones(transaccionesData);
-    setTotalTransacciones(transaccionesData.length);
-    setLoading(false);
-  };
-
-  const eliminarTransaccion = (id) => {
-    if (window.confirm('¿Estás seguro de eliminar esta transacción?')) {
-      setTransacciones(transacciones.filter(transaccion => transaccion.id !== id));
-      // Aquí iría la lógica para eliminar la transacción desde la API
+    try {
+      const response = await fetch('http://localhost:5000/api/transactions');
+      const data = await response.json();
+      setTransacciones(data.data);  // Asumiendo que 'data' es la clave que contiene la lista de clientes
+      setLoading(false);
+    } catch (error) {
+      console.log('Error al cargar las transacciones:', error);
+      setLoading(false);
     }
   };
+
+  const eliminarTransaccion = async (id) => {
+    if (window.confirm('¿Estás seguro de eliminar a esta transacción?')) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/transactions/${id}`, {
+          method: 'DELETE',
+        });
+  
+        const result = await response.json();
+        if (result.success) {
+          setTransacciones(transacciones.filter(transaccion => transaccion._id !== id));
+          console.log('Transacción eliminada');
+        } else {
+          console.error('Error al eliminar transacción:', result.message);
+        }
+      } catch (error) {
+        console.error('Error al eliminar transacción:', error);
+      }
+    }
+  };
+  
 
   return (
     <div className="transacciones-container">
@@ -77,10 +69,10 @@ function Transacciones() {
           </thead>
           <tbody>
             {transacciones.map(transaccion => (
-              <tr key={transaccion.id}>
-                <td>{transaccion.id}</td>
-                <td>{transaccion.transactionType}</td>
-                <td>{transaccion.transactionStatus}</td>
+              <tr key={transaccion._id}>
+                <td>{transaccion._id}</td>
+                <td>{transaccion.type}</td>
+                <td>{transaccion.status}</td>
                 <td>${transaccion.amount}</td>
                 <td>{transaccion.accountId}</td>
                 <td>{transaccion.cardId || 'N/A'}</td>
@@ -91,7 +83,7 @@ function Transacciones() {
                 <td>
                   <button
                     className="btn eliminar-btn"
-                    onClick={() => eliminarTransaccion(transaccion.id)}
+                    onClick={() => eliminarTransaccion(transaccion._id)}
                   >
                     Eliminar
                   </button>

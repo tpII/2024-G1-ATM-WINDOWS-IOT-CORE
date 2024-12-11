@@ -5,15 +5,34 @@ import './AgregarCuenta.css';
 function AgregarCuenta() {
   const [number, setNumber] = useState('');
   const [cbu, setCbu] = useState('');
-  const [balance, setBalance] = useState(0);
   const [clientId, setClientId] = useState('');
   const navigate = useNavigate();
   
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para enviar los datos al servidor (API)
-    console.log('Cuenta agregada:', { number, cbu, balance, clientId });
-    navigate('/cuentas'); // Redirigir a la página de cuentas
+  
+    const cuenta = { number: number, cbu: cbu, clientId: clientId };
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/accounts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cuenta),
+      });
+  
+      const result = await response.json();
+      if (result.success) {
+        console.log('Cuenta agregada:', result.data);
+        navigate('/cuentas'); // Redirige después de agregar
+      } else {
+        console.log('Error al agregar cuenta:', result.message);
+      }
+    } catch (error) {
+      console.error('Error en el servidor:', error);
+    }
   };
 
   return (
@@ -32,13 +51,6 @@ function AgregarCuenta() {
           placeholder="CBU"
           value={cbu}
           onChange={(e) => setCbu(e.target.value)}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Balance"
-          value={balance}
-          onChange={(e) => setBalance(e.target.value)}
           required
         />
         <input

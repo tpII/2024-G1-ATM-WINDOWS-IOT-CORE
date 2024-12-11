@@ -13,40 +13,34 @@ function Tarjetas() {
   }, []);
 
   const fetchTarjetas = async () => {
-    // Simulando tarjetas por ahora
-    const tarjetasData = [
-      {
-        id: 1,
-        number: '1234567812345678',
-        pin: '****', // Ocultamos el PIN
-        clientId: 'Cliente 1',
-        accountId: 'Cuenta 1',
-        isActive: true,
-        expirationDate: '12/24',
-        createdAt: '2023-01-01',
-        updatedAt: '2023-06-01',
-      },
-      {
-        id: 2,
-        number: '9876543298765432',
-        pin: '****',
-        clientId: 'Cliente 2',
-        accountId: 'Cuenta 2',
-        isActive: false,
-        expirationDate: '11/23',
-        createdAt: '2023-03-15',
-        updatedAt: '2023-08-20',
-      },
-    ];
-    setTarjetas(tarjetasData);
-    setTotalTarjetas(tarjetasData.length); // Total de tarjetas
-    setLoading(false);
+    try {
+      const response = await fetch('http://localhost:5000/api/cards');
+      const data = await response.json();
+      setTarjetas(data.data);  // Asumiendo que 'data' es la clave que contiene la lista de clientes
+      setLoading(false);
+    } catch (error) {
+      console.log('Error al cargar las tarjetas:', error);
+      setLoading(false);
+    }
   };
 
-  const eliminarTarjeta = (id) => {
+  const eliminarTarjeta = async (id) => {
     if (window.confirm('¿Estás seguro de eliminar esta tarjeta?')) {
-      setTarjetas(tarjetas.filter((tarjeta) => tarjeta.id !== id));
-      // Aquí iría la lógica para eliminar la tarjeta desde la API
+      try {
+        const response = await fetch(`http://localhost:5000/api/cards/${id}`, {
+          method: 'DELETE',
+        });
+  
+        const result = await response.json();
+        if (result.success) {
+          setTarjetas(tarjetas.filter(tarjeta => tarjeta._id !== id));
+          console.log('Tarjeta eliminada');
+        } else {
+          console.error('Error al eliminar tarjeta:', result.message);
+        }
+      } catch (error) {
+        console.error('Error al eliminar tarjeta:', error);
+      }
     }
   };
 
@@ -88,7 +82,7 @@ function Tarjetas() {
                 <td>
                   <button
                     className="btn eliminar-btn"
-                    onClick={() => eliminarTarjeta(tarjeta.id)}
+                    onClick={() => eliminarTarjeta(tarjeta._id)}
                   >
                     Eliminar
                   </button>
