@@ -1,0 +1,92 @@
+.tarjetas-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tarjetas-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .tarjetas-container p {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .agregar-btn {
+    background-color: #28a745;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .agregar-btn:hover {
+    background-color: #218838;
+  }
+  
+  .eliminar-btn {
+    background-color: #dc3545;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .eliminar-btn:hover {
+    background-color: #c82333;
+  }
+  
+  .tarjetas-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .tarjetas-table th,
+  .tarjetas-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .tarjetas-table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .tarjetas-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .tarjetas-table tr:hover {
+    background-color: #e9ecef;
+  }
+  
+  .tarjetas-table td {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .tarjetas-table td:last-child {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  

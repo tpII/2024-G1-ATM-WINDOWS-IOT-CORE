@@ -1,0 +1,61 @@
+/* Contenedor principal */
+.agregar-cliente-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+.agregar-cliente-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* Formulario */
+.agregar-cliente-container form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.agregar-cliente-container form input {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.agregar-cliente-container form input:focus {
+  border-color: #007bff; /* Azul para enfoque */
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.3); /* Resaltado suave */
+}
+
+/* Botón de acción */
+.agregar-cliente-container button {
+  padding: 12px 20px;
+  background-color: #4CAF50; /* Verde para acción */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  align-self: center;
+  transition: background-color 0.3s ease;
+}
+
+.agregar-cliente-container button:hover {
+  background-color: #45a049; /* Verde más oscuro al pasar */
+}
+
+.agregar-cliente-container button:disabled {
+  background-color: #a5d6a7; /* Verde deshabilitado */
+  cursor: not-allowed;
+}
