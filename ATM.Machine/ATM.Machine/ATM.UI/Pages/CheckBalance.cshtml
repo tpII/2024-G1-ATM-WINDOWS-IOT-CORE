@@ -8,12 +8,7 @@
 
 @if (Model.Balance.HasValue)
 {
-    <p>Your account balance is: @Model.Balance</p>
+    <p class="info">Saldo actual en tu cuenta: $@Model.Balance</p>
 }
 
-<a asp-page="/Menu" class="mt-3 btn btn-secondary">Regresar al Menu</a>
-
-@if (!string.IsNullOrEmpty(Model.ErrorMessage)) 
-{
-    <p style="color: red;">@Model.ErrorMessage</p>
-}
+<a asp-page="/Menu" class="mt-3 btn btn-primary">Regresar al Menú</a>

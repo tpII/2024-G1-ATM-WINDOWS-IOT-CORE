@@ -14,7 +14,6 @@ public class TransferModel : PageModel
     [BindProperty]
     public string DestinationCbu { get; set; }
 
-    public string? SuccessMessage { get; set; }
     public string? ErrorMessage { get; set; }
 
     public TransferModel(Transfer transfer)
@@ -28,18 +27,26 @@ public class TransferModel : PageModel
     {
         if (string.IsNullOrEmpty(DestinationCbu))
         {
-            ErrorMessage = "Se requiere que ingrese un CBU destino.";
+            ModelState.AddModelError("", "Debe ingresar un CBU");
+            return Page();
+        }
+
+        if (Amount <= 0)
+        {
+            ModelState.AddModelError("", "El monto debe ser mayor a cero.");
             return Page();
         }
 
         try
         {
             await _transfer.ExecuteAsync(DestinationCbu, Amount);
-            SuccessMessage = $"Successfully transfered {Amount:C} to account with CBU:{DestinationCbu}.";
+            TempData["Message"] = "Transferencia realizada con éxito.";
+            return RedirectToPage("/Menu");
         }
         catch (Exception ex)
         {
-            ErrorMessage = ex.Message;
+            
+            ErrorMessage = $"Hubo un error procesando su transferencia: {ex.Message}. \n Intentelo nuevamente";
         }
 
         return Page(); // Devuelve la misma página para mostrar el resultado
