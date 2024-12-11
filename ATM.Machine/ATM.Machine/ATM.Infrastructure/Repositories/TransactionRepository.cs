@@ -4,8 +4,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ATM.Application.Interfaces.Repositories;
+using ATM.Application.Exceptions;
 using ATM.Domain.Entities;
 using ATM.Infrastructure.Utils;
+using ATM.Infrastructure.DTOs;
 
 namespace ATM.Infrastructure.Repositories;
 public class TransactionRepository : ITransactionRepository
@@ -29,41 +31,41 @@ public class TransactionRepository : ITransactionRepository
         // Enviar la solicitud POST al servidor Node.js
         var response = await _httpClient.PostAsync("api/transactions/get-by-account-id", content);
 
-        // Verificar si la respuesta es exitosa
-        if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException("Failed to retrieve transactions.");
-
-        // Leer el contenido de la respuesta y deserializarlo
         var responseContent = await response.Content.ReadAsStringAsync();
-        return responseContent.Deserialize<IEnumerable<Transaction>>();
+
+        var payload = responseContent.Deserialize<IEnumerable<Transaction>>();
+
+        // Verificar si la respuesta es exitosa
+        if (!response.IsSuccessStatusCode || payload == null)
+            throw new RepositoryException("Ocurrio un error al recuperar las transacciones. Intentelo nuevamente");
+        
+        return payload;
     }
 
     // Método para agregar una nueva transacción
     public async Task AddAsync(Transaction transaction)
     {
-        var payload = new { 
-            AccountId = transaction.AccountId,
-            Amount = transaction.Amount,
-            DestinationCbu = transaction.DestinationCbu,
-            Type = transaction.Type,
-            Description = transaction.Description,
-        };
+        var data = new AddTransactionRequest(transaction.AccountId, transaction.Amount, transaction.DestinationCbu, transaction.Type, transaction.Description);
+
         // Serializar la transacción a JSON
-        var content = new StringContent(CustomJsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+        
+        var content = new StringContent(CustomJsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
 
-        // Enviar la solicitud POST al servidor Node.js
-        var response = await _httpClient.PostAsync("api/transactions/", content);
-
-        // Verificar si la respuesta es exitosa
-        if (!response.IsSuccessStatusCode) {
+        var payload = new AddTransactionResponse();
+        HttpResponseMessage? response = null;
+        try
+        {
+            response = await _httpClient.PostAsync("api/transactions/", content);
             var responseContent = await response.Content.ReadAsStringAsync();
-            throw new HttpRequestException(responseContent.Deserialize<AddResponse>().Message);
+            payload = responseContent?.Deserialize<AddTransactionResponse>();
+            if(!response.IsSuccessStatusCode)
+            {
+                throw new RepositoryException(payload?.Message ?? "Ocurrió un error con su transacción. Inténtelo nuevamente");
+            }
+        }
+        catch (Exception)
+        {
+            throw new RepositoryException(payload?.Message ?? "Ocurrió un error con su transacción. Inténtelo nuevamente");
         }
     }
-}
-
-public class AddResponse
-{
-    public bool? Success {get; set;}
-    public string? Message {get; set;}
 }

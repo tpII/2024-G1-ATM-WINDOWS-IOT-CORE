@@ -3,8 +3,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ATM.Application.Interfaces.Repositories;
+using ATM.Application.Exceptions;
 using ATM.Domain.Entities;
 using ATM.Infrastructure.Utils;
+using ATM.Infrastructure.DTOs;
 
 namespace ATM.Infrastructure.Repositories
 {
@@ -34,18 +36,23 @@ namespace ATM.Infrastructure.Repositories
 
         public async Task<decimal> GetBalanceAsync(string accountId)
         {
-
-            Console.WriteLine($"AccounId: {accountId}");
-
             // Enviar la solicitud POST
-            var response = await _httpClient.GetAsync($"api/accounts/balance/{accountId}");
-
-            if (!response.IsSuccessStatusCode)
-                throw new HttpRequestException("Failed to retrieve balance.");
-
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var payload = responseContent.Deserialize<BalanceResponse>();
-            return payload.Balance;
+            HttpResponseMessage? response = null;
+            try
+            {
+                response = await _httpClient.GetAsync($"api/accounts/balance/{accountId}");
+                var responseContent = await response.Content.ReadAsStringAsync();
+                var payload = responseContent.Deserialize<BalanceResponse>();
+                if (!response.IsSuccessStatusCode || payload == null)
+                {
+                    throw new RepositoryException("Ocurrio un error al recuperar su saldo. Inténtelo nuevamente");
+                }
+                return payload.Balance;
+            }
+            catch (Exception)
+            {
+                throw new RepositoryException("Ocurrio un error al recuperar su saldo. Inténtelo nuevamente");
+            }
         }
 
         public async Task<bool> ExistsAsync(string accountId)
@@ -64,7 +71,3 @@ namespace ATM.Infrastructure.Repositories
     }
 }
 
-public class BalanceResponse
-{
-    public decimal Balance { get; set; }
-}

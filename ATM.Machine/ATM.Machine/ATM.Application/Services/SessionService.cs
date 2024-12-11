@@ -2,12 +2,14 @@ using System;
 using ATM.Application.Interfaces.Services;
 using ATM.Application.Interfaces.Repositories;
 using ATM.Application.Interfaces.Security;
+using ATM.Application.Exceptions;
 
 namespace ATM.Application.Services;
 
 public class SessionService : ISessionService
 {
     public string? CardId { get; set; }
+    
     public string? AccountId { get; set; }
 
     private readonly ICardRepository _cardRepository;
@@ -22,7 +24,7 @@ public class SessionService : ISessionService
 
     public async Task<bool> VerifyCardAsync(string number)
     {
-        CardId = await _cardRepository.ExistsAsync(number);
+        CardId = await _cardRepository.GetIdByNumber(number);
         return CardId != null;
     }
 
@@ -34,11 +36,16 @@ public class SessionService : ISessionService
         return AccountId != null;
     }
 
+    public bool IsSessionActive()
+    {
+        return (CardId == null || AccountId == null);
+    }
+
     public string GetCardId()
     {
         if(CardId == null)
         {
-            throw new Exception("Servicio de sesión: no existe una sesion actualmente");
+            throw new SessionException("No se ha iniciado una sesión previamente");
         }
         return CardId;
     }
@@ -47,7 +54,7 @@ public class SessionService : ISessionService
     {
         if(AccountId == null)
         {
-            throw new Exception("Servicio de sesión: no existe una sesion actualmente");
+            throw new SessionException("No se ha iniciado una sesión previamente");
         }
         return AccountId;
     }
