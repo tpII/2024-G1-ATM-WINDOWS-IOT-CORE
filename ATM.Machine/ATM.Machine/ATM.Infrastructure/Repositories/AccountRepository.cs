@@ -28,9 +28,6 @@ namespace ATM.Infrastructure.Repositories
             // Enviar la solicitud POST
             var response = await _httpClient.PostAsync("api/accounts/get-by-id", content);
 
-            if (!response.IsSuccessStatusCode)
-                return null;
-
             var responseContent = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<Account>(responseContent);
         }

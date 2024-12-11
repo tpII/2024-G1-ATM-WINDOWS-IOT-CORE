@@ -13,7 +13,8 @@ using System.Text.Json;
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfaces
 
-var uri = new Uri("http://localhost:5010");
+// var uri = new Uri("http://localhost:5010");
+var uri = new Uri("http://192.168.0.148:5000");
 
 // Configurar el repositorio de tarjetas con HttpClient
 builder.Services.AddHttpClient<ICardRepository, CardRepository>(client =>
@@ -33,24 +34,12 @@ builder.Services.AddHttpClient<ITransactionRepository, TransactionRepository>(cl
     client.BaseAddress = uri; // IP del servidor Node.js
 });
 
-// Configurar el repositorio de configuración de límites del cajero ATM
-builder.Services.AddHttpClient<IATMConfigurationRepository, ATMConfigurationRepository>(client =>
-{
-    client.BaseAddress = uri; // IP del servidor Node.js
-});
-
-//Configurar el repositorio de control de dinero en el cajero ATM 
-builder.Services.AddHttpClient<ICashManagementRepository, CashManagementRepository>(client =>
-{
-    client.BaseAddress = uri; // IP del servidor Node.js
-});
-
 // Registrar servicios
 builder.Services.AddTransient<IEncryptionService, EncryptionService>();
 builder.Services.AddSingleton<SessionService>();
+builder.Services.AddSingleton<ATMConfigurationService>();
+builder.Services.AddSingleton<CashManagementService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IATMConfigurationService, ATMConfigurationService>();
-builder.Services.AddScoped<ICashManagementService, CashManagementService>();
 builder.Services.AddSingleton<IRfidReader, Windows10RfidReader>();
 builder.Services.AddHostedService<RfidBackgroundService>();
 

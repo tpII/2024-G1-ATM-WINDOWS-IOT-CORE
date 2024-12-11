@@ -6,21 +6,20 @@ namespace ATM.Application.Services
 {
     public class ATMConfigurationService : IATMConfigurationService
     {
-        private readonly IATMConfigurationRepository _repository;
+        public decimal MaxLimit { get; private set; } = 1000000;
+        public decimal MinLimit { get; private set; }
 
-        public ATMConfigurationService(IATMConfigurationRepository repository)
+        public Task SetWithdrawalLimitsAsync(decimal maxLimit, decimal minLimit)
         {
-            _repository = repository;
+            MaxLimit = maxLimit;
+            MinLimit = minLimit;
+            return Task.CompletedTask;
+        }
+        
+        public Task<(decimal MaxLimit, decimal MinLimit)> GetWithdrawalLimitsAsync()
+        {
+            return Task.FromResult((MaxLimit, MinLimit));
         }
 
-        public async Task SetWithdrawalLimitsAsync(int maxLimit, int minLimit)
-        {
-            await _repository.SetWithdrawalLimitsAsync(maxLimit, minLimit);
-        }
-
-        public async Task<(int MaxLimit, int MinLimit)> GetWithdrawalLimitsAsync()
-        {
-            return await _repository.GetWithdrawalLimitsAsync();
-        }
     }
 }
