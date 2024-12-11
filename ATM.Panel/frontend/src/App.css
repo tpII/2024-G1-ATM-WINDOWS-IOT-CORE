@@ -1,8 +1,12 @@
 /* Contenedor principal */
 .App {
   text-align: center;
+  background-color: #1c1f26; /* Gris oscuro con matiz de azul */
+  color: white;
+  min-height: 100vh;
 }
 
+/* Encabezado principal */
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -12,6 +16,28 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+/* Panel de administrador */
+.panel-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1200px;
+  background-color: #282c34;
+  border: 1px solid #0056b3; /* Bordes azul brillante */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra más visible */
+}
+
+/* Títulos */
+.panel-title {
+  font-size: 2rem;
+  color: #FFFFFF; 
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ff3b3b; /* Línea roja */
+  display: inline-block;
+  padding-bottom: 5px;
 }
 
 /* Contenedor de botones */
@@ -24,17 +50,89 @@
 }
 
 /* Estilo de botones */
-.home-button {
+.home-button,
+.panel-button {
   padding: 15px 30px;
-  font-size: 1em;
-  background-color: #007BFF;
+  font-size: 1.2em;
+  background-color: #007BFF; /* Azul */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  text-decoration: none; /* Elimina el subrayado */
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* Sombra azul */
 }
 
-.home-button:hover {
-  background-color: #0056b3;
+.home-button:hover,
+.panel-button:hover {
+  background-color: #0056b3; /* Azul más oscuro */
+  color: white;
+  box-shadow: 0 6px 12px rgba(255, 59, 59, 0.5); /* Sombra roja al pasar */
+  transform: scale(1.05); /* Efecto de agrandamiento */
 }
+
+.home-button:active,
+.panel-button:active {
+  transform: scale(1); /* Vuelve a su tamaño original */
+  box-shadow: 0 3px 6px rgba(0, 123, 255, 0.2); /* Sombra más tenue */
+}
+
+/* Tablas */
+.table-container {
+  margin: 20px auto;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1c1f26;
+  color: white;
+  border: 1px solid #007BFF; /* Bordes azul brillante */
+}
+
+.table th {
+  padding: 10px;
+  background-color: #007BFF; /* Azul brillante */
+  color: white;
+  text-transform: uppercase;
+}
+
+.table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #282c34; /* Líneas divisorias oscuras */
+}
+
+.table tr:nth-child(even) {
+  background-color: #2c313a; /* Alterna filas con gris oscuro */
+}
+
+.table tr:hover {
+  background-color: #3e444e; /* Fondo más claro al pasar */
+}
+
+/* Enlaces */
+a {
+  color: #007BFF;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #ff3b3b; /* Rojo al pasar */
+}
+
+/* Notificaciones o alertas */
+.alert {
+  padding: 15px;
+  margin: 10px auto;
+  background-color: #ff3b3b; /* Fondo rojo para alertas */
+  color: white;
+  border-radius: 5px;
+  max-width: 800px;
+  font-size: 1em;
+  text-align: center;
+}
+

@@ -1,61 +1,78 @@
+/* Contenedor principal */
 .transacciones-container {
     margin: 20px auto;
     padding: 20px;
     max-width: 1200px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #f9f9f9; /* Fondo claro */
+    border: 1px solid #ddd; /* Borde suave */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
   }
   
+  /* Título principal */
   .transacciones-container h1 {
     text-align: center;
-    color: #333;
+    color: #333; /* Color oscuro para el título */
     margin-bottom: 10px;
   }
   
+  /* Descripción o párrafos */
   .transacciones-container p {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
-    color: #555;
+    color: #555; /* Gris para los textos */
   }
   
+  /* Tabla de transacciones */
   .transacciones-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    overflow-x: auto;
+    overflow-x: auto; /* Asegura que la tabla sea desplazable si es demasiado ancha */
   }
   
+  /* Cabecera de la tabla */
   .transacciones-table th,
   .transacciones-table td {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd; /* Bordes suaves */
     padding: 10px;
     text-align: center;
     font-size: 14px;
   }
   
+  /* Color de fondo en la cabecera */
   .transacciones-table th {
-    background-color: #007bff;
+    background-color: #007bff; /* Azul brillante para cabecera */
     color: white;
     font-weight: bold;
   }
   
+  /* Fondo alternado en las filas */
   .transacciones-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2; /* Gris claro en filas pares */
   }
   
+  /* Efecto hover sobre las filas */
   .transacciones-table tr:hover {
-    background-color: #e9ecef;
+    background-color: #e9ecef; /* Gris más claro al pasar */
   }
   
+  /* Color de texto en las celdas */
   .transacciones-table td {
-    color: #333;
+    color: #333; /* Texto oscuro */
     font-size: 14px;
   }
   
+  /* Espaciado y alineación de botones en la última columna */
+  .transacciones-table td:last-child {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  /* Botones generales */
   .btn {
     padding: 10px 20px;
     font-size: 14px;
@@ -63,15 +80,16 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .eliminar-btn {
-    background-color: #dc3545;
-    color: white;
     transition: background-color 0.3s ease;
   }
   
+  /* Botón Eliminar */
+  .eliminar-btn {
+    background-color: #dc3545; /* Rojo para eliminar */
+    color: white;
+  }
+  
   .eliminar-btn:hover {
-    background-color: #c82333;
+    background-color: #c82333; /* Rojo más oscuro al pasar */
   }
   

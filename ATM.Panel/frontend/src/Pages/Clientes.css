@@ -1,43 +1,103 @@
+/* Contenedor principal */
 .clientes-container {
-    padding: 20px;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .btn {
-    padding: 10px;
-    margin: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .agregar-btn {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .eliminar-btn {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .clientes-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .clientes-table th, .clientes-table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .clientes-table th {
-    background-color: #f4f4f4;
-  }
-  
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1200px;
+  background-color: #f9f9f9; /* Fondo claro */
+  border: 1px solid #ddd; /* Borde suave */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Título principal */
+.clientes-container h1 {
+  text-align: center;
+  color: #333; /* Color oscuro para el título */
+  margin-bottom: 10px;
+}
+
+/* Descripción o párrafos */
+.clientes-container p {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #555; /* Gris para los textos */
+}
+
+/* Botones generales */
+.btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Botón Agregar */
+.agregar-btn {
+  background-color: #28a745; /* Verde para agregar */
+  color: white;
+}
+
+.agregar-btn:hover {
+  background-color: #218838; /* Verde más oscuro al pasar */
+}
+
+/* Botón Eliminar */
+.eliminar-btn {
+  background-color: #dc3545; /* Rojo para eliminar */
+  color: white;
+}
+
+.eliminar-btn:hover {
+  background-color: #c82333; /* Rojo más oscuro al pasar */
+}
+
+/* Tabla de clientes */
+.clientes-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Cabecera de la tabla */
+.clientes-table th,
+.clientes-table td {
+  border: 1px solid #ddd; /* Bordes suaves */
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Color de fondo en la cabecera */
+.clientes-table th {
+  background-color: #007bff; /* Azul brillante para cabecera */
+  color: white;
+  font-weight: bold;
+}
+
+/* Fondo alternado en las filas */
+.clientes-table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Gris claro en filas pares */
+}
+
+/* Efecto hover sobre las filas */
+.clientes-table tr:hover {
+  background-color: #e9ecef; /* Gris más claro al pasar */
+}
+
+/* Color de texto en las celdas */
+.clientes-table td {
+  color: #333; /* Texto oscuro */
+  font-size: 14px;
+}
+
+/* Espaciado y alineación de botones en la última columna */
+.clientes-table td:last-child {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

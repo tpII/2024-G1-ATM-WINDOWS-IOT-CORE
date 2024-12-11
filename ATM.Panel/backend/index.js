@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';  // Importa el paquete cors
 import { connectDB } from './config/db.js';
 
 import accountRoutes from "./routes/account.route.js"
@@ -12,6 +13,11 @@ const PORT = process.env.PORT || 5000;
 const IP = `${process.env.IP}` || 'locahost';
 
 const app = express();
+
+// Habilita CORS para solicitudes desde el frontend en localhost:3000
+app.use(cors({
+    origin: 'http://localhost:3000',  // Permite solicitudes desde este origen
+}));
 
 app.use(express.json()); //allows us to accept JSON data in the body
 

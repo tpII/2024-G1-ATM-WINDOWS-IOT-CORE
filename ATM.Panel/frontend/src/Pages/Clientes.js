@@ -12,22 +12,38 @@ function Clientes() {
   }, []);
 
   const fetchClientes = async () => {
-    // Aquí iría la lógica para obtener los datos de la API
-    // Simulando clientes por ahora:
-    setClientes([
-      { id: 1, nombre: 'Juan Pérez', email: 'juan@mail.com' },
-      { id: 2, nombre: 'Ana Gómez', email: 'ana@mail.com' },
-      { id: 3, nombre: 'Carlos Ruiz', email: 'carlos@mail.com' },
-    ]);
-    setLoading(false);
-  };
-
-  const eliminarCliente = (id) => {
-    if (window.confirm('¿Estás seguro de eliminar a este cliente?')) {
-      setClientes(clientes.filter(cliente => cliente.id !== id));
-      // Aquí iría la lógica para eliminar el cliente de la base de datos (API)
+    try {
+      const response = await fetch('http://localhost:5000/api/clients');
+      const data = await response.json();
+      setClientes(data.data);  // Asumiendo que 'data' es la clave que contiene la lista de clientes
+      setLoading(false);
+    } catch (error) {
+      console.log('Error al cargar los clientes:', error);
+      setLoading(false);
     }
   };
+
+
+  const eliminarCliente = async (id) => {
+    if (window.confirm('¿Estás seguro de eliminar a este cliente?')) {
+      try {
+        const response = await fetch(`http://localhost:5000/api/clients/${id}`, {
+          method: 'DELETE',
+        });
+  
+        const result = await response.json();
+        if (result.success) {
+          setClientes(clientes.filter(cliente => cliente._id !== id));
+          console.log('Cliente eliminado');
+        } else {
+          console.error('Error al eliminar cliente:', result.message);
+        }
+      } catch (error) {
+        console.error('Error al eliminar cliente:', error);
+      }
+    }
+  };
+  
 
   return (
     <div className="clientes-container">
@@ -36,9 +52,6 @@ function Clientes() {
         <Link to="/clientes/agregar">
           <button className="btn agregar-btn">Agregar Cliente</button>
         </Link>
-        <button className="btn eliminar-btn" onClick={() => eliminarCliente(1)}>
-          Eliminar Cliente (Ejemplo)
-        </button>
       </div>
       {loading ? (
         <p>Cargando clientes...</p>
@@ -49,17 +62,19 @@ function Clientes() {
               <th>ID</th>
               <th>Nombre</th>
               <th>Email</th>
+              <th>Teléfono</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {clientes.map(cliente => (
-              <tr key={cliente.id}>
-                <td>{cliente.id}</td>
-                <td>{cliente.nombre}</td>
+              <tr key={cliente._id}>
+                <td>{cliente._id}</td>
+                <td>{cliente.fullName}</td>
                 <td>{cliente.email}</td>
+                <td>{cliente.phone}</td>
                 <td>
-                  <button className="btn eliminar-btn" onClick={() => eliminarCliente(cliente.id)}>
+                  <button className="btn eliminar-btn" onClick={() => eliminarCliente(cliente._id)}>
                     Eliminar
                   </button>
                 </td>

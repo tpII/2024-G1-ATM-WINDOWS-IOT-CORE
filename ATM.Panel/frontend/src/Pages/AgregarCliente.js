@@ -10,11 +10,30 @@ function AgregarCliente() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para enviar los datos al servidor (API)
-    console.log('Cliente agregado:', { nombre, email });
-    navigate('/clientes'); // Cambio aquí: usa navigate para redirigir
+  
+    const cliente = { fullName: nombre, email: email, phone: phone };
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/clients', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cliente),
+      });
+  
+      const result = await response.json();
+      if (result.success) {
+        console.log('Cliente agregado:', result.data);
+        navigate('/clientes'); // Redirige después de agregar
+      } else {
+        console.log('Error al agregar cliente:', result.message);
+      }
+    } catch (error) {
+      console.error('Error en el servidor:', error);
+    }
   };
-
+  
   return (
     <div className="agregar-cliente-container">
       <h1>Agregar Cliente</h1>
