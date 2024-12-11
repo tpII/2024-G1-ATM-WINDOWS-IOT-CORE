@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './DineroDisponible.css'; // Asegúrate de que el archivo CSS esté importado
 
 function DineroDisponible() {
   const [availableCash, setAvailableCash] = useState('');
@@ -48,20 +49,27 @@ function DineroDisponible() {
     }
   };
 
+  // Cargar el dinero disponible al montar el componente
+  useEffect(() => {
+    fetchAvailableCash();
+  }, []);
+
   return (
-    <div>
-      <h1>Dinero Disponible</h1>
-      <button onClick={fetchAvailableCash}>Consultar Dinero Disponible</button>
-      {availableCash && <p>Dinero Disponible: {availableCash}</p>}
+    <div className="dinero-container">
+      <h1>Cajero ATM</h1>
+      {availableCash && <p className="dinero-info">Dinero Disponible: {availableCash}</p>}
       <h2>Recargar Dinero</h2>
-      <input
-        type="number"
-        placeholder="Cantidad a recargar"
-        value={reloadAmount}
-        onChange={(e) => setReloadAmount(e.target.value)}
-      />
-      <button onClick={reloadCash}>Recargar</button>
-      {message && <p>{message}</p>}
+      <div>
+        <input
+          type="number"
+          placeholder="Cantidad a recargar"
+          value={reloadAmount}
+          onChange={(e) => setReloadAmount(e.target.value)}
+          className="dinero-input"
+        />
+      </div>
+      <button className="dinero-button" onClick={reloadCash}>Recargar</button>
+      {message && <p className="dinero-message">{message}</p>}
     </div>
   );
 }

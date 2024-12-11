@@ -17,7 +17,6 @@ function Transacciones() {
       const data = await response.json();
       setTransacciones(data.data);  // Asumiendo que 'data' es la clave que contiene la lista de clientes
       setTotalTransacciones(data.data.length); 
-
       setLoading(false);
     } catch (error) {
       console.log('Error al cargar las transacciones:', error);
@@ -53,49 +52,52 @@ function Transacciones() {
       {loading ? (
         <p>Cargando transacciones...</p>
       ) : (
-        <table className="transacciones-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tipo</th>
-              <th>Estado</th>
-              <th>Monto</th>
-              <th>ID de Cuenta</th>
-              <th>ID de Tarjeta</th>
-              <th>ID Cuenta Destino</th>
-              <th>Fecha</th>
-              <th>Realizado por</th>
-              <th>Descripción</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transacciones.map(transaccion => (
-              <tr key={transaccion._id}>
-                <td>{transaccion._id}</td>
-                <td>{transaccion.type}</td>
-                <td>{transaccion.status}</td>
-                <td>${transaccion.amount}</td>
-                <td>{transaccion.accountId}</td>
-                <td>{transaccion.cardId || 'N/A'}</td>
-                <td>{transaccion.destinationAccountId || 'N/A'}</td>
-                <td>{new Date(transaccion.createdAt).toLocaleString()}</td>
-                <td>{transaccion.performedBy || 'N/A'}</td>
-                <td>{transaccion.description || 'N/A'}</td>
-                <td>
-                  <button
-                    className="btn eliminar-btn"
-                    onClick={() => eliminarTransaccion(transaccion._id)}
-                  >
-                    Eliminar
-                  </button>
-                </td>
+        <div className="transacciones-table-wrapper">
+          <table className="transacciones-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Monto</th>
+                <th>ID de Cuenta</th>
+                <th>ID de Tarjeta</th>
+                <th>ID Cuenta Destino</th>
+                <th>Fecha</th>
+                <th>Realizado por</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {transacciones.map(transaccion => (
+                <tr key={transaccion._id}>
+                  <td>{transaccion._id}</td>
+                  <td>{transaccion.type}</td>
+                  <td>{transaccion.status}</td>
+                  <td>${transaccion.amount}</td>
+                  <td>{transaccion.accountId}</td>
+                  <td>{transaccion.cardId || 'N/A'}</td>
+                  <td>{transaccion.destinationAccountId || 'N/A'}</td>
+                  <td>{new Date(transaccion.createdAt).toLocaleString()}</td>
+                  <td>{transaccion.performedBy || 'N/A'}</td>
+                  <td>{transaccion.description || 'N/A'}</td>
+                  <td>
+                    <button
+                      className="btn eliminar-btn"
+                      onClick={() => eliminarTransaccion(transaccion._id)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
+
   );
 }
 

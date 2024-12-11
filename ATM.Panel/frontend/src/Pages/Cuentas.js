@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Cuentas.css'; // Asegúrate de tener un archivo de estilos
+import './Cuentas.css'; 
 
 function Cuentas() {
   const [cuentas, setCuentas] = useState([]);

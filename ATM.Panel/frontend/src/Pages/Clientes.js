@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Clientes.css'; // Asegúrate de tener un archivo de estilos
+import './Clientes.css'; 
 
 function Clientes() {
   const [clientes, setClientes] = useState([]);

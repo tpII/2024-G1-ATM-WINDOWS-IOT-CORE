@@ -1,0 +1,81 @@
+/* Estilos exclusivos para DineroDisponible */
+
+.dinero-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dinero-container h1 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+  }
+  
+  .dinero-container h2 {
+    color: #444;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  
+  .dinero-info {
+    font-weight: bold;
+    font-size: 18px;
+    color: #000; /* Cambiado a negro */
+    text-align: center;
+  }
+  
+  .dinero-input {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .dinero-input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .dinero-button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .dinero-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .dinero-button:active {
+    background-color: #00408f;
+  }
+  
+  .dinero-message {
+    color: #2ecc71; /* Verde para el mensaje de éxito */
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .dinero-container p {
+    text-align: center;
+  }
+  

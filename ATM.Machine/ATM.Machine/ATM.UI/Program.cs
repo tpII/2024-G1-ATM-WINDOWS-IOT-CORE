@@ -9,7 +9,6 @@ using ATM.Infrastructure.Hubs;
 using ATM.Infrastructure.Repositories;
 using System.Text.Json;
 
-
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfaces
 
@@ -55,6 +54,17 @@ builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddControllers();
 
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontendMERN", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 //Add controllers
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -62,7 +72,9 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
 
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -76,6 +88,9 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Configuración de CORS en la aplicación
+app.UseCors("AllowFrontendMERN");
 
 app.UseAuthorization();
 

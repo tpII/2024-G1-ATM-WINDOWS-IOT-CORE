@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ATM.Application.Services;
 using ATM.Infrastructure.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace ATM.UI.Controllers
 {

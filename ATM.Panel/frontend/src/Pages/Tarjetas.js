@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Tarjetas.css'; // Asegúrate de tener un archivo de estilos
+import './Tarjetas.css'; 
 
 function Tarjetas() {
   const [tarjetas, setTarjetas] = useState([]);
