@@ -12,6 +12,8 @@ function Home() {
         <Link to="/clientes" className="home-button">Clientes</Link>
         <Link to="/tarjetas" className="home-button">Tarjetas</Link>
         <Link to="/transacciones" className="home-button">Transacciones</Link>
+        <Link to="/limites-extraccion" className="home-button">Límites de Extracción</Link>
+        <Link to="/dinero-disponible" className="home-button">Dinero Disponible</Link>
       </div>
     </div>
   );

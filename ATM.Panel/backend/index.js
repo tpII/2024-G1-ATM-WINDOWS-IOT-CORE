@@ -7,6 +7,7 @@ import accountRoutes from "./routes/account.route.js"
 import cardRoutes from "./routes/card.route.js"
 import clientRoutes from "./routes/client.route.js"
 import transactionRoutes from "./routes/transaction.route.js"
+import atmRoutes from "./routes/atmRoutes.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -25,6 +26,7 @@ app.use("/api/accounts", accountRoutes);
 app.use("/api/cards", cardRoutes);
 app.use("/api/clients", clientRoutes);
 app.use("/api/transactions", transactionRoutes);
+app.use("/api/atm", atmRoutes);
 
 app.listen(PORT, IP, () => {
     connectDB();

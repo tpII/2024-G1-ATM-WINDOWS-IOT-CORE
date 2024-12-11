@@ -71,7 +71,7 @@ function Tarjetas() {
           </thead>
           <tbody>
             {tarjetas.map((tarjeta) => (
-              <tr key={tarjeta.id}>
+              <tr key={tarjeta._id}>
                 <td>{tarjeta.number}</td>
                 <td>{tarjeta.clientId}</td>
                 <td>{tarjeta.accountId}</td>
