@@ -136,12 +136,19 @@ export const verifyPin = async (req,res) => {
 
     try {
         const card = await Card.findById(cardId);
+
         if (!card || card.pin != pin) {
             return res.status(404).json({ 
                 accountId : null
             });
         }
 
+        if (!card.isActive) {
+            return res.status(404).json({ 
+                accountId : null
+            });
+        }
+        
         res.status(200).json({ accountId: card.accountId });
     } catch (error) {
         console.log("Error al verificar un pin: ", error.message);
