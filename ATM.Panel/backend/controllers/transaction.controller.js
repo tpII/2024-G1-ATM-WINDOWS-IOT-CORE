@@ -87,18 +87,19 @@ export const createTransaction = async (req, res) => {
         let destinationAccount;
         if (transaction.type === "Transfer") {
             destinationAccount = await Account.findOne({ cbu : transaction.destinationCbu });
+			
+			if (!destinationAccount) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Cuenta destino no encontrada"
+                });
+            }
 
             if(transaction.accountId == destinationAccount.id)
             {
                 return res.status(404).json({
                     success: false,
                     message: "La cuenta destino debe ser distinta a la cuenta origen. Coloque un CBU que no sea el propio"
-                });
-            }
-            if (!destinationAccount) {
-                return res.status(404).json({
-                    success: false,
-                    message: "Cuenta destino no encontrada"
                 });
             }
         }
