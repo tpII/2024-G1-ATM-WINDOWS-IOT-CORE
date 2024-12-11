@@ -60,7 +60,9 @@ h1 {
 }
 
 .form-button {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
   width: 100%;
 }
 

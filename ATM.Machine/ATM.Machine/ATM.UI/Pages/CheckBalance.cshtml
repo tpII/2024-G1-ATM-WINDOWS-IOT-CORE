@@ -10,5 +10,9 @@
 {
     <p class="info">Saldo actual en tu cuenta: $@Model.Balance</p>
 }
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
 
 <a asp-page="/Menu" class="mt-3 btn btn-primary">Regresar al Menú</a>

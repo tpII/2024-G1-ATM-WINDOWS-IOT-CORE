@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ATM.Application.Interfaces.Services;
 using ATM.Application.Services;
 using ATM.Application.UseCases;
+using ATM.Application.Exceptions;
 using System.Linq;
 
 namespace ATM.UI.Pages;
@@ -16,14 +17,27 @@ public class EnterPinModel : PageModel
 
     public string? Message { get; private set; }
 
-    public EnterPinModel(EnterPinUseCase useCase)
+    public SessionService SessionService { get; set; }
+
+    public EnterPinModel(EnterPinUseCase useCase, SessionService sessionService)
     {
         _useCase = useCase;
         Pin = "";
+        SessionService = sessionService;
     }
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
+        try
+        {
+            SessionService.GetCardId();   
+            return Page();
+        }
+        catch (SessionException)
+        {
+            TempData["Message"] = "Por favor acerque su tarjeta para ingresar al sistema";
+            return RedirectToPage("/Index");
+        }
     }
 
     public async Task<IActionResult> OnPostAsync()

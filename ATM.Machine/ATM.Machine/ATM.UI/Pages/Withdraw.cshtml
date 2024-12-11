@@ -6,6 +6,11 @@
 
 <h1>Retiro</h1>
 
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
 <form method="post">
     <div class="form-group">
         <label class="form-label" for="Amount">Ingrese el monto a retirar:</label>
@@ -16,10 +21,5 @@
         <a asp-page="/Menu" class="btn btn-secondary">Cancelar</a>
     </div>
 </form>
-
-@if (!string.IsNullOrEmpty(Model.ErrorMessage))
-{
-    <div class="alert alert-danger">@Model.ErrorMessage</div>
-}
 
 <script src="~/js/activity.js"></script>
