@@ -16,7 +16,7 @@ function Limites() {
   const fetchLimits = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://192.168.0.138:5000/api/config/get-limits');
+      const response = await fetch('http://minwinpc:5000/api/config/get-limits');
       const data = await response.json();
       setLimits({
         max: data.maxLimit,
@@ -40,7 +40,7 @@ function Limites() {
     }
 
     try {
-      const response = await fetch('http://192.168.0.138:5000/api/config/set-limits', {
+      const response = await fetch('http://minwinpc:5000/api/config/set-limits', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -8,12 +8,33 @@ using ATM.Infrastructure.Services;
 using ATM.Infrastructure.Hubs;
 using ATM.Infrastructure.Repositories;
 using System.Text.Json;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Escuchar en todas las interfaces
 
+// Verificar si se proporcionó al menos un argumento
+if (args.Length < 2)
+{
+    Console.Error.WriteLine("Error: No se proporcionó una dirección IP y un port");
+    Environment.Exit(1); // Salir con código de error 1
+}
+
+string ip = args[0];
+
+// Validar si el argumento es una dirección IP válida
+if (!IPAddress.TryParse(ip, out _))
+{
+    Console.Error.WriteLine($"Error: La dirección IP proporcionada '{ip}' no es válida.");
+    Environment.Exit(1); // Salir con código de error 1
+}
+
+string port = args[1];
+
+Console.WriteLine($"La dirección IP es válida: {ip}" + $" y su port es {port}");
+
 // var uri = new Uri("http://localhost:5010");
-var uri = new Uri("http://192.168.0.148:5000");
+var uri = new Uri($"http://{ip}:{port}");
 
 // Configurar el repositorio de tarjetas con HttpClient
 builder.Services.AddHttpClient<ICardRepository, CardRepository>(client =>

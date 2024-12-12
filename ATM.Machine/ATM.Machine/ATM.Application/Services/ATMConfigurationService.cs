@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using ATM.Application.Interfaces.Repositories;
 using ATM.Application.Interfaces.Services;
@@ -13,10 +14,10 @@ namespace ATM.Application.Services
         {
             if(minLimit < 0 || maxLimit < 0)
             {
-                throw ArgumentOutOfRangeException("Los límites deben ser mayores o iguales a cero");
+                throw new ArgumentOutOfRangeException("Los límites deben ser mayores o iguales a cero");
             }
             if(maxLimit < minLimit) {
-                throw ArgumentException("El limite máximo debe ser mayor o igual al límite mínimo");
+                throw new ArgumentException("El limite máximo debe ser mayor o igual al límite mínimo");
             }
             MaxLimit = maxLimit;
             MinLimit = minLimit;

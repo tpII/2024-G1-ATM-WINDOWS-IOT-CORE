@@ -9,7 +9,7 @@ function DineroDisponible() {
   // Función para consultar el dinero disponible
   const fetchAvailableCash = async () => {
     try {
-      const response = await fetch('http://192.168.0.138:5000/api/cash-management/available-cash', {
+      const response = await fetch('http://minwinpc:5000/api/cash-management/available-cash', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ function DineroDisponible() {
   // Función para recargar dinero
   const reloadCash = async () => {
     try {
-      const response = await fetch('http://192.168.0.138:5000/api/cash-management/load-cash', {
+      const response = await fetch('http://minwinpc:5000/api/cash-management/load-cash', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
